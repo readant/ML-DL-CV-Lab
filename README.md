@@ -1,4 +1,4 @@
-# Sum | 机器学习&机器视觉 从入门到实战全记录
+# ML-DL-CV-Lab | 机器学习&深度学习&机器视觉 从入门到实战全记录
 > 物联网工程专业从大一开始的AI学习全历程开源仓库 | 零基础入门 | 三环境隔离 | RTX 50系显卡完美适配 | 结构化学习笔记 | 可复现实战代码
 
 本仓库全程记录从零基础入门，到机器学习基础、机器视觉YOLO实战、MediaPipe姿态估计、项目落地的完整学习路径。配套保姆级环境配置教程、结构化学习笔记、可直接运行的实战代码、完整项目源码，为零基础入门AI视觉/机器学习的同学提供可参考、可复现的学习范本。
@@ -6,24 +6,14 @@
 ---
 
 ## 📋 目录
-- [🌟 仓库核心亮点](sslocal://flow/file_open?url=%23-%E4%BB%93%E5%BA%93%E6%A0%B8%E5%BF%83%E4%BA%AE%E7%82%B9&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-- [🎯 适合人群](sslocal://flow/file_open?url=%23-%E9%80%82%E5%90%88%E4%BA%BA%E7%BE%A4&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-- [📁 仓库文件夹结构](sslocal://flow/file_open?url=%23-%E4%BB%93%E5%BA%93%E6%96%87%E4%BB%B6%E5%A4%B9%E7%BB%93%E6%9E%84&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-- [🛠️ 环境配置说明](sslocal://flow/file_open?url=%23%EF%B8%8F-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-  - [前置依赖](sslocal://flow/file_open?url=%23%E5%89%8D%E7%BD%AE%E4%BE%9D%E8%B5%96&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-  - [环境1：ml-full 机器学习专属环境](sslocal://flow/file_open?url=%23%E7%8E%AF%E5%A2%831ml-full-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%93%E5%B1%9E%E7%8E%AF%E5%A2%83&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-  - [环境2：cv-yolo 机器视觉YOLO专属环境](sslocal://flow/file_open?url=%23%E7%8E%AF%E5%A2%832cv-yolo-%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89yolo%E4%B8%93%E5%B1%9E%E7%8E%AF%E5%A2%83&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-  - [环境3：mp MediaPipe姿态估计专属环境](sslocal://flow/file_open?url=%23%E7%8E%AF%E5%A2%833mp-mediapipe%E5%A7%BF%E6%80%81%E4%BC%B0%E8%AE%A1%E4%B8%93%E5%B1%9E%E7%8E%AF%E5%A2%83&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-  - [环境验证](sslocal://flow/file_open?url=%23%E7%8E%AF%E5%A2%83%E9%AA%8C%E8%AF%81&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-- [📅 学习路线规划](sslocal://flow/file_open?url=%23-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E8%A7%84%E5%88%92&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-  - [第一阶段：机器学习全栈入门（8周）](sslocal://flow/file_open?url=%23%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A8%E6%A0%88%E5%85%A5%E9%97%A88%E5%91%A8&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-  - [第二阶段：机器视觉&YOLO实战（16周）](sslocal://flow/file_open?url=%23%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%9C%BA%E5%99%A8%E8%A7%86%E8%A7%89yolo%E5%AE%9E%E6%88%9816%E5%91%A8&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-  - [第三阶段：MediaPipe姿态估计（8周）](sslocal://flow/file_open?url=%23%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5mediapipe%E5%A7%BF%E6%80%81%E4%BC%B0%E8%AE%A18%E5%91%A8&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-- [📌 使用与提交规范](sslocal://flow/file_open?url=%23-%E4%BD%BF%E7%94%A8%E4%B8%8E%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-  - [文件使用规范](sslocal://flow/file_open?url=%23%E6%96%87%E4%BB%B6%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-  - [Git提交规范](sslocal://flow/file_open?url=%23git%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-- [📄 免责声明](sslocal://flow/file_open?url=%23-%E5%85%8D%E8%B4%A3%E5%A3%B0%E6%98%8E&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
-- [🤝 交流与反馈](sslocal://flow/file_open?url=%23-%E4%BA%A4%E6%B5%81%E4%B8%8E%E5%8F%8D%E9%A6%88&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)
+- [🌟 仓库核心亮点](#-仓库核心亮点)
+- [🎯 适合人群](#-适合人群)
+- [📁 仓库文件夹结构](#-仓库文件夹结构)
+- [🛠️ 环境配置说明](#️-环境配置说明)
+- [📅 学习路线规划](#-学习路线规划)
+- [📌 使用与提交规范](#-使用与提交规范)
+- [📄 免责声明](#-免责声明)
+- [🤝 交流与反馈](#-交流与反馈)
 
 ---
 
@@ -50,75 +40,67 @@
 严格遵循「学习阶段隔离、笔记代码分离、数据模型统一管理」的原则，结构如下：
 
 ```plaintext
-Sum/
+ML-DL-CV-Lab/
 ├── 00_prerequisites/              # 前置基础：Python、数据科学、数学
-│   ├── 00_python_basics/           # Python基础语法
-│   ├── 01_numpy_pandas/            # NumPy & Pandas 数据处理
-│   ├── 02_data_visualization/      # Matplotlib & Seaborn 可视化
-│   └── 03_math_basics/            # 数学基础（线性代数、概率统计）
+│   ├── 00_python_basics/          # Python基础语法
+│   ├── 01_data_processing/        # NumPy & Pandas 数据处理
+│   ├── 02_data_visualization/     # Matplotlib & Seaborn 可视化
+│   └── 03_math_basics/           # 数学基础（线性代数、概率统计）
 │
-├── 01_machine_learning/            # 第一阶段：机器学习
-│   ├── 00_notes/                   # 学习笔记（按主题分类）
-│   │   ├── 01_intro/               # 机器学习入门
-│   │   ├── 02_supervised_learning/ # 监督学习
-│   │   ├── 03_unsupervised_learning/# 无监督学习
-│   │   └── 09_experiments/         # 实验测试
-│   ├── 01_code/                    # 代码练习
-│   │   ├── 01_numpy_practice/      # NumPy练习
-│   │   ├── 02_sklearn/             # sklearn算法实现
-│   │   └── 03_visualization/      # 可视化代码
-│   ├── 02_projects/                # 项目实战
-│   │   ├── advertising_sales/      # 广告与销售分析项目
-│   │   └── house_price/           # 房价预测项目
-│   └── data/                       # 统一数据区
+├── 01_machine_learning/           # 第一阶段：机器学习
+│   ├── 00_notes/                  # 学习笔记（按主题分类）
+│   │   └── 01_intro/              # 机器学习入门
+│   ├── 01_code/                   # 代码练习
+│   │   ├── 01_numpy_practice/     # NumPy练习
+│   │   ├── 02_sklearn/            # sklearn算法实现
+│   │   └── 03_visualization/     # 可视化代码
+│   ├── 02_projects/               # 项目实战
+│   └── data/                      # 统一数据区
 │
-├── 02_deep_learning/               # 第二阶段：深度学习（规划中）
+├── 02_deep_learning/              # 第二阶段：深度学习（规划中，暂无内容）
 │   ├── 00_notes/
 │   ├── 01_code/
 │   ├── 02_projects/
 │   └── data/
 │
-├── 03_computer_vision/             # 第三阶段：计算机视觉
-│   ├── 00_notes/                   # 学习笔记
-│   │   ├── 01_opencv/              # OpenCV基础
-│   │   ├── 02_yolo/                # YOLO目标检测
-│   │   ├── 03_video_processing/    # 视频处理
-│   │   ├── 04_projects/            # 项目实战
-│   │   └── 09_experiments/         # 实验测试
-│   ├── 01_code/                    # 代码练习
-│   │   ├── 01_opencv/              # OpenCV代码
-│   │   ├── 02_yolo/                # YOLO代码
-│   │   └── 03_video/               # 视频处理代码
-│   ├── 02_projects/                # 项目实战
-│   ├── data/                       # 统一数据区
-│   └── models/                     # YOLO模型存放区
+├── 03_computer_vision/            # 第三阶段：计算机视觉
+│   ├── 00_notes/                  # 学习笔记
+│   ├── 01_code/                   # 代码练习
+│   │   ├── opencv/                # OpenCV代码
+│   │   ├── yolo/                  # YOLO代码
+│   │   └── video_processing/      # 视频处理代码
+│   ├── 02_projects/               # 项目实战
+│   └── models/                    # YOLO模型存放区
 │
-├── 04_mediapipe/                   # 第四阶段：MediaPipe
-│   ├── 00_notes/                   # 学习笔记
-│   ├── 01_code/                    # 代码练习
-│   │   ├── hand/                   # 手部姿态
-│   │   ├── face/                   # 面部特征
-│   │   └── body/                   # 身体姿态
-│   ├── 02_projects/                # 项目实战
-│   └── models/                     # MediaPipe模型（纯ASCII路径）
+├── 04_pose_estimation/            # 第四阶段：MediaPipe姿态估计
+│   ├── 00_notes/                  # 学习笔记
+│   ├── 01_code/                   # 代码练习
+│   │   ├── hand/                  # 手部姿态
+│   │   ├── face/                  # 面部特征
+│   │   └── body/                  # 身体姿态
+│   ├── 02_projects/               # 项目实战
+│   └── models/                    # MediaPipe模型（纯ASCII路径）
 │
-├── 05_projects/                    # 第五阶段：综合项目
-│   ├── complete_projects/          # 完整项目
-│   ├── competition/                # 竞赛项目
-│   └── portfolio/                  # 作品集
+├── 05_projects/                   # 第五阶段：综合项目
+│   ├── complete_projects/         # 完整项目
+│   ├── competition/               # 竞赛项目
+│   └── portfolio/                 # 作品集
 │
-├── docs/                           # 文档
+├── docs/                          # 文档
 │   └── MediaPipe错误与解决方案.md  # 错误记录
 │
-├── scripts/                        # 工具脚本
-│   ├── 基础学习/                    # ml-full环境检查
-│   ├── 机器视觉/                    # cv-yolo环境检查
-│   ├── MediaPipe/                  # MediaPipe环境检查
-│   └── test.py                     # 摄像头测试
+├── scripts/                       # 工具脚本
+│   ├── env_setup/                 # 环境配置
+│   │   ├── ml-full/               # ml-full环境检查
+│   │   ├── cv-yolo/               # cv-yolo环境检查
+│   │   ├── mp/                    # MediaPipe环境检查
+│   │   └── 一键安装.py            # 一键安装所有环境
+│   └── utils/                     # 通用工具
+│       └── 摄像头测试.py          # 摄像头测试
 │
-├── test_model_paths.py             # 模型路径测试脚本
-├── .gitignore                      # Git忽略规则
-└── README.md                       # 本文档
+├── test_model_paths.py            # 模型路径测试脚本
+├── .gitignore                     # Git忽略规则
+└── README.md                      # 本文档
 ```
 
 ---
@@ -127,7 +109,7 @@ Sum/
 本仓库分为三套完全独立的虚拟环境，基于Miniconda搭建，避免版本冲突，以下为一键安装指令。
 
 ### 前置依赖
-- 安装 [Miniconda3](sslocal://flow/file_open?url=https%3A%2F%2Fdocs.conda.io%2Fen%2Flatest%2Fminiconda.html&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=)（推荐Python 3.11+版本）
+- 安装 [Miniconda3](https://docs.conda.io/en/latest/miniconda.html)（推荐Python 3.11+版本）
 - Windows用户需提前更新NVIDIA显卡驱动至最新版（RTX 50系显卡需驱动版本≥572.97）
 
 ---
@@ -138,8 +120,14 @@ Sum/
 # 1. 创建并激活环境
 conda create -n ml-full python=3.11 -y && conda activate ml-full
 
-# 2. 一键安装全量依赖
-pip install numpy pandas matplotlib scikit-learn scipy jupyterlab jupyterlab-language-pack-zh-CN seaborn openpyxl tqdm pyyaml
+# 2. 使用conda安装核心科学计算库（稳定可靠，版本兼容性好）
+conda install numpy pandas matplotlib scikit-learn scipy seaborn openpyxl tqdm pyyaml -y
+
+# 3. 使用pip安装开发工具（获取最新功能，体验更好）
+pip install jupyterlab jupyterlab-language-pack-zh-CN
+
+# 或使用 requirements 文件一键安装
+pip install -r requirements-ml-full.txt
 ```
 
 ---
@@ -150,23 +138,35 @@ pip install numpy pandas matplotlib scikit-learn scipy jupyterlab jupyterlab-lan
 # 1. 创建并激活环境
 conda create -n cv-yolo python=3.11 -y && conda activate cv-yolo
 
-# 2. 安装核心：RTX50系专属PyTorch GPU版（CUDA128 预览版，原生支持sm_120）
+# 2. 使用conda安装核心科学计算库（稳定可靠，版本兼容性好）
+conda install numpy pillow scipy scikit-image matplotlib tqdm pyyaml -y
+
+# 3. 安装核心：RTX50系专属PyTorch GPU版（CUDA128 预览版，原生支持sm_120）
 pip install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128
 
-# 3. 一键安装视觉全量依赖
-pip install ultralytics==8.4.33 opencv-python opencv-python-headless numpy==2.4.3 pillow scipy scikit-image matplotlib jupyterlab jupyterlab-language-pack-zh-CN moviepy tqdm pyyaml
+# 4. 使用pip安装视觉工具（获取最新功能，体验更好）
+pip install ultralytics opencv-python opencv-python-headless jupyterlab jupyterlab-language-pack-zh-CN moviepy
+
+# 或使用 requirements 文件一键安装（不含PyTorch，需单独安装）
+pip install -r requirements-cv-yolo.txt
 ```
 
 ---
 
 #### 环境3：mp MediaPipe姿态估计专属环境
-用于第三阶段MediaPipe姿态估计学习，专注于人体姿态、手部、面部特征检测。
+用于第四阶段MediaPipe姿态估计学习，专注于人体姿态、手部、面部特征检测。
 ```bash
 # 1. 创建并激活环境
 conda create -n mp python=3.11 -y && conda activate mp
 
-# 2. 一键安装MediaPipe全量依赖
-pip install mediapipe opencv-python numpy matplotlib requests tqdm
+# 2. 使用conda安装核心科学计算库（稳定可靠，版本兼容性好）
+conda install numpy matplotlib requests tqdm -y
+
+# 3. 使用pip安装视觉工具（获取最新功能，体验更好）
+pip install mediapipe opencv-python
+
+# 或使用 requirements 文件一键安装
+pip install -r requirements-mp.txt
 ```
 
 ---
@@ -176,15 +176,15 @@ pip install mediapipe opencv-python numpy matplotlib requests tqdm
 ```bash
 # 验证ml-full环境
 conda activate ml-full
-python scripts/基础学习/机器学习基础ml-full第三方库检查.py
+python scripts/env_setup/ml-full/环境检查.py
 
 # 验证cv-yolo环境
 conda activate cv-yolo
-python scripts/机器视觉/计算机视觉cv-yolo-pro第三方库检查.py
+python scripts/env_setup/cv-yolo/环境检查.py
 
 # 验证mp环境
 conda activate mp
-python scripts/MediaPipe/MediaPipe环境检查.py
+python scripts/env_setup/mp/环境检查.py
 ```
 
 ---
@@ -218,7 +218,7 @@ python scripts/MediaPipe/MediaPipe环境检查.py
 ---
 
 ### 第三阶段：MediaPipe姿态估计（8周）
-掌握MediaPipe人体姿态估计、手部检测、面部识别等核心技术，对应`04_mediapipe/`文件夹。
+掌握MediaPipe人体姿态估计、手部检测、面部识别等核心技术，对应`04_pose_estimation/`文件夹。
 
 | 学习模块 | 学习周期 | 核心学习内容 | 验收标准 |
 | :--- | :--- | :--- | :--- |
@@ -232,7 +232,7 @@ python scripts/MediaPipe/MediaPipe环境检查.py
 
 ## 📌 使用与提交规范
 ### 文件使用规范
-1.  学习笔记**仅存放于对应阶段的`00_jupyter_notes/`文件夹**，按学习模块分子文件夹管理
+1.  学习笔记**仅存放于对应阶段的`00_notes/`文件夹**，按学习模块分子文件夹管理
 2.  数据集、模型文件**仅存放于对应阶段的`data/`或`models/`文件夹**，绝不和代码、笔记混放
 3.  纯代码练习、工具脚本存放于对应模块的代码文件夹，不与笔记混杂
 4.  切换学习内容前，必须先激活对应的虚拟环境，避免版本冲突
@@ -255,6 +255,6 @@ python scripts/MediaPipe/MediaPipe环境检查.py
 ---
 
 ## 🤝 交流与反馈
-如果你也是AI学习新手，或者遇到了RTX 50系显卡的环境适配问题，欢迎通过 [Issue](sslocal://flow/file_open?url=https%3A%2F%2Fgithub.com%2Freadant%2FSum%2Fissues&flow_extra=eyJsaW5rX3R5cGUiOiJjb2RlX2ludGVycHJldGVyIn0=) 交流学习，一起踩坑一起进步！
+如果你也是AI学习新手，或者遇到了RTX 50系显卡的环境适配问题，欢迎通过 [Issue](https://github.com/readant/Sum/issues) 交流学习，一起踩坑一起进步！
 
 ---
