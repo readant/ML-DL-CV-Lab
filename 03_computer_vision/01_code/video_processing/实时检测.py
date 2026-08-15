@@ -1,8 +1,10 @@
+import os
 from ultralytics import YOLO
 import cv2
 
 # 加载训练好的轻量化模型,这个模型提前学会了80种常见的物体
-model = YOLO(r"E:\Projects0\Sum\02_cv-yolo_learning\data\models\yolov8n.pt")
+model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'models', 'yolov8n.pt')
+model = YOLO(model_path)
 
 # 打开电脑摄像头（0 = ,默认摄像头，1=外接摄像头）
 cap = cv2.VideoCapture(0) # 实时检测入口
