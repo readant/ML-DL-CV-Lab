@@ -1,0 +1,58 @@
+# ============================================================
+# ML-DL-CV-Lab 统一学习环境 (Conda, 环境名: main)
+# ------------------------------------------------------------
+# 学习阶段采用单一统一环境，覆盖全部学习内容：
+#   机器学习(NumPy/Pandas/Scikit-learn) +
+#   深度学习(PyTorch) +
+#   机器视觉(OpenCV/Ultralytics YOLO) +
+#   姿态估计(MediaPipe)
+#
+# 一键创建:
+#   conda env create -f environment.yml
+# 更新现有环境:
+#   conda env update -f environment.yml --prune
+# ============================================================
+
+name: main
+
+channels:
+  - defaults
+
+dependencies:
+  - python=3.11
+  # ---------- 数据科学 & 机器学习 ----------
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - scipy
+  - scikit-learn
+  - scikit-image
+  - pillow
+  - openpyxl
+  - tqdm
+  - requests
+  - pyyaml
+  - pip
+
+  # ---------- pip 安装部分 ----------
+  - pip:
+      # PyTorch: RTX 50 系(sm_120)专用 CUDA128 预览版
+      # 若无需 RTX 50 系支持，可替换为:
+      #   --index-url https://download.pytorch.org/whl/cu124  (通用稳定版)
+      #   --index-url https://download.pytorch.org/whl/cpu    (仅 CPU)
+      - --index-url https://download.pytorch.org/whl/nightly/cu128
+      - torch
+      - torchvision
+      - torchaudio
+      # 之后的包回到 PyPI 官方源
+      - --index-url https://pypi.org/simple
+      # ---------- 机器视觉 & YOLO ----------
+      - ultralytics
+      - opencv-python
+      - moviepy
+      # ---------- 姿态估计 ----------
+      - mediapipe
+      # ---------- 开发环境 ----------
+      - jupyterlab
+      - jupyterlab-language-pack-zh-CN
