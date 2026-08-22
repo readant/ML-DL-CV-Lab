@@ -13,9 +13,9 @@ conda activate main
 ```plaintext
 02_deep_learning/
 ├── README.md          # 本使用指引
-├── 00_notes/          # 学习笔记（md）
-├── 01_code/           # 代码/notebook
-└── 02_projects/       # 项目实战
+├── 00_笔记/           # 学习笔记（md）
+├── 01_代码/           # 代码/notebook
+└── 02_项目/           # 项目实战
 ```
 
 模型与数据统一放在仓库根级：模型 `../models/`、数据 `../data/`。

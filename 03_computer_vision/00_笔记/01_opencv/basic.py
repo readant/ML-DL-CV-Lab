@@ -2,7 +2,7 @@ import cv2
 from pathlib import Path
 
 # 通过 __file__ 上溯定位仓库根，不依赖当前工作目录（CWD）
-# basic.py 位于 03_computer_vision/00_notes/01_opencv/，上溯 3 层到仓库根
+# basic.py 位于 03_computer_vision/00_笔记/01_opencv/，上溯 3 层到仓库根
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 IMG_PATH = PROJECT_ROOT / "data" / "images" / "test" / "logo.png"
 

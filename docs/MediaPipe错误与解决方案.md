@@ -6,7 +6,7 @@
 
 ### 错误信息
 ```
-RuntimeError: Unable to open file at e:\Projects0\ML-DL-CV-Lab\04_pose_estimation\01_code\face\面部检测\models\face_landmarker.task
+RuntimeError: Unable to open file at e:\Projects0\ML-DL-CV-Lab\04_pose_estimation\01_代码\面部\面部检测\models\face_landmarker.task
 ```
 
 ### 原因分析
@@ -125,20 +125,20 @@ FileNotFoundError: Unable to open file at ...\pose_landmarker.task
 │   ├── face_landmarker.task
 │   ├── pose_landmarker.task
 │   └── 下载模型.py  # 统一的下载脚本
-├── 01_code/
-│   ├── hand/
+├── 01_代码/
+│   ├── 手部/
 │   │   ├── 手部检测/手部检测测试.py
 │   │   ├── 手势识别/手势识别测试.py
 │   │   ├── 双手协同/双手协同测试.py
 │   │   └── 置信度估计/置信度估计测试.py
-│   ├── face/
+│   ├── 面部/
 │   │   ├── 面部检测/面部检测测试.py
 │   │   ├── 表情识别/表情识别测试.py
 │   │   └── 面部特征分析/面部特征分析测试.py
-│   └── body/
+│   └── 身体/
 │       ├── 姿态检测/姿态检测测试.py
 │       └── 全身检测/全身检测测试.py
-└── 00_notes/
+└── 00_笔记/
 ```
 
 ## 总结

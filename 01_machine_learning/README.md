@@ -13,12 +13,11 @@ conda activate main
 ```plaintext
 01_machine_learning/
 ├── README.md          # 本使用指引
-├── 00_notes/          # 学习笔记（md）
-├── 01_code/           # 代码/notebook
-│   ├── 00_intro/              # 数据科学入门
-│   ├── 01_basics_library/     # 基础库（NumPy/Pandas/Matplotlib）
-│   └── 02_algorithms/         # sklearn 算法
-└── 02_projects/       # 项目实战
+├── 00_笔记/           # 学习笔记（md）
+├── 01_代码/           # 代码/notebook
+│   ├── 01_基础库/            # 基础库与数据分析（NumPy/Pandas/Matplotlib + 数据分析实战）
+│   └── 02_算法/              # sklearn 算法
+└── 02_项目/           # 项目实战
 ```
 
 数据集统一放在仓库根级 `../data/`。

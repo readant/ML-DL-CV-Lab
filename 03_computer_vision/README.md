@@ -13,10 +13,10 @@ conda activate main
 ```plaintext
 03_computer_vision/
 ├── README.md          # 本使用指引
-├── 00_notes/          # 学习笔记（md）
-├── 01_code/           # 练习代码
-│   └── video_processing/    # 视频处理/实时检测
-└── 02_projects/       # 项目实战
+├── 00_笔记/           # 学习笔记（md）
+├── 01_代码/           # 练习代码
+│   └── 视频处理/      # 视频处理/实时检测
+└── 02_项目/           # 项目实战
 ```
 
 模型与数据统一放在仓库根级：

@@ -72,28 +72,25 @@ ML-DL-CV-Lab/
 ├── .gitignore                      # Git 忽略规则
 │
 ├── 00_prerequisites/               # 前置基础：Python、数据科学、数学
-│   ├── 00_python_basics/           # Python 基础（速查表/控制流/函数/OOP）
-│   ├── 01_data_processing/         # NumPy & Pandas 数据处理
-│   ├── 02_data_visualization/      # Matplotlib 可视化
-│   └── 03_math_basics/             # 数学基础（线性代数、概率统计）
+│   ├── 00_Python基础/              # Python 基础（速查表/控制流/函数/OOP）
+│   └── 03_数学基础/                # 数学基础（线性代数、概率统计）
 │
 ├── 01_machine_learning/            # 第一阶段：机器学习
 │   ├── README.md                   # 阶段使用指引
-│   ├── 01_code/                    # 代码/notebook
-│   │   ├── 00_intro/               # 数据科学入门
-│   │   ├── 01_basics_library/      # 基础库（NumPy/Pandas/Matplotlib）
-│   │   └── 02_algorithms/          # sklearn 算法
-│   └── 02_projects/                # 项目实战
+│   ├── 01_代码/                    # 代码/notebook
+│   │   ├── 01_基础库/              # 基础库与数据分析（NumPy/Pandas/Matplotlib + 数据分析实战）
+│   │   └── 02_算法/                # sklearn 算法
+│   └── 02_项目/                    # 项目实战
 │
 ├── 02_deep_learning/               # 第二阶段：深度学习（规划中）
 ├── 03_computer_vision/             # 第三阶段：计算机视觉（YOLO）
-│   └── 01_code/video_processing/   # 视频处理/实时检测
+│   └── 01_代码/视频处理/           # 视频处理/实时检测
 │
 ├── 04_pose_estimation/             # 第四阶段：MediaPipe 姿态估计
 │   ├── base_test.py                # 测试基类
-│   ├── body/                       # 身体姿态
-│   ├── face/                       # 面部特征/表情识别
-│   └── hand/                       # 手部检测/手势识别
+│   ├── 身体/                       # 身体姿态
+│   ├── 面部/                       # 面部特征/表情识别
+│   └── 手部/                       # 手部检测/手势识别
 │
 ├── data/                           # 根级共享数据集（不入库）
 ├── models/                         # 根级共享预训练模型（不入库）
@@ -210,7 +207,7 @@ python scripts/env_setup/环境检查.py
 
 ### 文件使用规范
 
-1. 学习笔记**仅存放于对应阶段的 `00_notes/` 文件夹**（前置基础阶段直接放在模块目录），按学习模块分子文件夹管理。
+1. 学习笔记**仅存放于对应阶段的 `00_笔记/` 文件夹**（前置基础阶段直接放在模块目录），按学习模块分子文件夹管理。
 2. 数据集、模型文件**统一存放于根级 `data/` 或 `models/` 文件夹**，绝不与代码、笔记混放。
 3. 纯代码练习、工具脚本存放于对应模块的代码文件夹，不与笔记混杂。
 4. 整个学习阶段统一使用 `conda activate main` 激活环境，无需在多个环境间切换。
