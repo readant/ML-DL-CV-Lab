@@ -13,8 +13,10 @@ conda activate main
 ```plaintext
 02_deep_learning/
 ├── README.md          # 本使用指引
-├── 00_笔记/           # 学习笔记（md）
-├── 01_代码/           # 代码/notebook
+├── 00_笔记/
+│   └── 01_注意力机制/  # 注意力/多头注意力：PDF 页码索引、中文文献、摘要笔记（离线 HTML）
+├── 01_代码/
+│   └── 01_注意力机制/  # NumPy/PyTorch 实现 + 14 条断言 + 字符热力图演示
 └── 02_项目/           # 项目实战
 ```
 
@@ -26,6 +28,26 @@ conda activate main
 2. 神经网络搭建与训练
 3. CNN / RNN 等经典架构
 4. 深度学习项目实战
+
+## 已完成模块
+
+### 注意力机制（Attention / Multi-Head Attention）
+
+不依赖预训练权重与 GPU，几秒内可跑完，用 14 条断言把易错细节钉死。
+
+```bash
+conda activate main
+cd 02_deep_learning/01_代码/01_注意力机制
+python -m unittest test_attention -v   # Ran 14 tests ... OK
+python demo_attention.py               # 打印注意力权重矩阵
+```
+
+| 位置 | 内容 |
+| :--- | :--- |
+| [`01_代码/01_注意力机制/`](01_代码/01_注意力机制/) | `attention_numpy.py`（从零实现）、`attention_torch.py`（可训练）、`test_attention.py`（14 条断言）、`demo_attention.py`、实现笔记 HTML |
+| [`00_笔记/01_注意力机制/`](00_笔记/01_注意力机制/) | 技术点索引（PDF 页码）、中文文献清单（18 条题录）、文献笔记（7 篇摘要提炼） |
+
+三个已验证的结论：`W_q` 与 `W_k` 必须分开投影（绑定后 91% 的词只关注自己，分开后降到 9%）；多头参数量恒为 4d²、与头数无关；mask 必须加在 softmax 之前。
 
 ## Notebook 中使用根级模型/数据
 
