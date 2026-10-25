@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>文献笔记 · 注意力与多头注意力</title>
+<style>
+:root{--bg:#f6f4f0;--card:#fff;--ink:#191b1e;--ink2:#4a4f57;--ink3:#85898f;--line:#e5e0d8;
+  --accent:#17594f;--soft:#e9f1ee;--warn:#a8562a;--warnbg:#fdf5f1}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.75;
+  font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.serif{font-family:Georgia,"Songti SC","SimSun",serif}
+a{color:inherit;text-decoration:none}
+.wrap{display:grid;grid-template-columns:214px minmax(0,1fr);max-width:1240px;margin:0 auto}
+.side{position:sticky;top:0;height:100vh;padding:30px 20px;border-right:1px solid var(--line);
+  display:flex;flex-direction:column;gap:16px}
+.brand{font-size:12px;letter-spacing:.14em;color:var(--ink3);text-transform:uppercase}
+.brand b{display:block;font-size:15px;margin-top:6px;color:var(--ink);font-weight:600;text-transform:none;
+  font-family:Georgia,"Songti SC",serif;line-height:1.45}
+.side nav{display:flex;flex-direction:column;gap:2px;border-top:1px solid var(--line);padding-top:14px}
+.side nav a{font-size:13px;color:var(--ink2);padding:6px 8px;border-radius:6px}
+.side nav a:hover{background:#efece6;color:var(--ink)}
+.side .foot{margin-top:auto;font-size:12px;color:var(--ink3);border-top:1px solid var(--line);padding-top:12px;line-height:1.7}
+main{padding:44px 46px 90px;min-width:0}
+.kicker{font-size:12px;letter-spacing:.16em;color:var(--ink3);text-transform:uppercase;margin:0 0 14px}
+h1{font-size:clamp(27px,3.4vw,38px);line-height:1.25;margin:0;font-weight:600;letter-spacing:-.01em}
+h1 small{display:block;font-size:.5em;color:var(--ink2);font-weight:400;margin-top:12px}
+.lede{font-size:16px;color:var(--ink2);max-width:68ch;margin:18px 0 0}
+section{margin-top:52px;scroll-margin-top:20px}
+h2{font-size:20px;font-weight:600;margin:0;letter-spacing:-.01em}
+h2 .num2{color:var(--ink3);font-size:12.5px;margin-right:11px;letter-spacing:.06em;font-family:"Segoe UI",sans-serif;vertical-align:2px}
+.secdesc{color:var(--ink2);font-size:14px;margin:6px 0 0;max-width:76ch}
+/* 总览表 */
+table.ov{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card);
+  border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:16px;table-layout:fixed}
+.ov th{text-align:left;font-size:11px;letter-spacing:.08em;color:var(--ink3);padding:10px 12px;
+  background:#faf8f4;border-bottom:1px solid var(--line);white-space:nowrap}
+.ov td{padding:10px 12px;border-bottom:1px solid #f5f2eb;color:var(--ink2);vertical-align:top}
+.ov tr:last-child td{border-bottom:0}
+.ov td.n{width:28px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.ov td.ti{width:44%;color:var(--ink);font-weight:500;line-height:1.5;overflow-wrap:break-word}
+.ov td.ti a:hover{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.ov td.y{width:52px;font-variant-numeric:tabular-nums;color:var(--ink3)}
+.ov td.c{width:52px;text-align:right;color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums}
+.ov td.tag{width:30%;font-size:12.5px;color:var(--ink2)}
+/* 笔记卡 */
+.note{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-top:14px}
+.nh{display:flex;gap:12px;align-items:flex-start}
+.idx{font-family:Georgia,serif;font-size:15px;color:var(--ink3);padding-top:2px;flex:none}
+.nt{flex:1;min-width:0}
+.nt h3{margin:0;font-size:16px;font-weight:600;line-height:1.5;font-family:Georgia,"Songti SC",serif}
+.nt h3 a:hover{color:var(--accent)}
+.nm{margin:4px 0 0;font-size:12.5px;color:var(--ink3)}
+.nm .dot{margin:0 5px;color:#cfc9bf}
+.nm b{color:var(--accent);font-variant-numeric:tabular-nums}
+.ntag{flex:none;font-size:11px;color:var(--accent);background:var(--soft);border-radius:4px;
+  padding:2px 8px;margin-top:3px;white-space:nowrap}
+.role{margin:10px 0 0;font-size:13px;color:var(--ink2);font-style:normal;
+  border-left:2px solid var(--soft);padding-left:10px}
+.pts{margin:10px 0 0;padding-left:18px;font-size:13.8px;color:var(--ink2)}
+.pts li{margin:5px 0}
+.pts b{color:var(--ink);font-weight:600}
+details{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px}
+summary{cursor:pointer;font-size:12.5px;color:var(--ink3);list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸ ";color:var(--ink3)}
+details[open] summary::before{content:"▾ "}
+summary:hover{color:var(--accent)}
+.abs{margin:8px 0 0;font-size:13px;color:var(--ink2);background:#faf8f4;border-radius:7px;
+  padding:12px 14px;line-height:1.85;border:1px solid #f1ece4}
+.kw{margin:8px 0 0;font-size:12.5px;color:var(--ink3)}
+/* 结论 */
+.finds{display:grid;gap:12px;margin-top:16px}
+.find{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 20px;
+  display:grid;grid-template-columns:30px 1fr;gap:12px}
+.find .fn{font-family:Georgia,serif;font-size:19px;color:var(--accent2,#a63a1e);line-height:1.3}
+.find h4{margin:0 0 4px;font-size:15px;font-weight:600}
+.find p{margin:0;font-size:13.8px;color:var(--ink2)}
+.find b{color:var(--ink)}
+.warnbox{background:var(--warnbg);border:1px solid #f2e2d8;border-radius:10px;padding:4px 0;margin-top:14px}
+.warnbox div{padding:11px 18px;border-bottom:1px solid #f8ece5;font-size:13.5px;color:var(--ink2)}
+.warnbox div:last-child{border-bottom:0}
+.warnbox b{color:var(--warn)}
+footer{margin-top:58px;border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:var(--ink3);line-height:1.8}
+@media (max-width:1000px){
+  .wrap{grid-template-columns:1fr}
+  .side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding:20px}
+  .side nav{flex-direction:row;flex-wrap:wrap;gap:4px;border-top:0;padding-top:0}
+  .side nav a{background:#efece6;font-size:12.5px}
+  .side .foot{margin-top:6px}
+  main{padding:28px 18px 70px}
+  .ov td.tag{display:none}
+  .nh{flex-wrap:wrap}
+}
+@media print{.side{display:none}.wrap{display:block}main{padding:0}.note{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<aside class="side">
+  <div class="brand">摘要级笔记<b>注意力 · MHA<br>7 篇</b></div>
+  <nav>
+    <a href="#overview">总览</a>
+    <a href="#notes">逐篇笔记</a>
+    <a href="#finds">三条结论</a>
+    <a href="#proc">过程与坑</a>
+  </nav>
+  <div class="foot">
+    数据：知网详情页<br>2026-10-23 实抓<br>仅读摘要，未下载全文
+  </div>
+</aside>
+
+<main>
+<p class="kicker">知网摘要级笔记 · 2026-10-23</p>
+<h1 class="serif">文献笔记<small>注意力机制 与 多头注意力 —— 7 篇的摘要已读、已核对题名，下面是提炼而不是复制</small></h1>
+<p class="lede">每条都做了三件事：① 用知网详情页的<b>真实摘要</b>核对文献身份（防止张冠李戴）；② 把摘要压缩成 3–4 个可判断的要点；③ 标出它对你（物联网 + 时序方向）到底有什么用。摘要原文折叠在每条下面，可展开比对。</p>
+
+<section id="overview">
+  <h2><span class="num2">00</span>总览：七篇各自负责什么</h2>
+  <p class="secdesc">同一主题下这七篇并不重复 —— 它们分别占据「地图 / 动机 / 基准 / 方向 / 组件」五个位置。判断标准是：读完它，你能多回答一个问题。</p>
+  <table class="ov">
+    <thead><tr><th>#</th><th>题名（点击在知网按篇名重检）</th><th>年份</th><th>被引</th><th>它负责回答的问题</th></tr></thead>
+    <tbody><tr>
+  <td class="n">1</td>
+  <td class="ti"><a href="https://kns.cnki.net/kns8s/defaultresult/index?crossids=YSTT4HG0%2CLSTPFY1C%2CEMRPGLPA%2CJUP3MUPD%2CMPMFIG1A%2CWQ0UVIAA%2CBLZOG7CK%2CPWFIRAGL%2CNLBO1Z6R%2CNN3FJMUV&korder=TI&kw=%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E7%BB%BC%E8%BF%B0" target="_blank">注意力机制综述</a></td>
+  <td class="y">2021</td>
+  <td class="c">1380</td>
+  <td class="tag">全景地图</td>
+</tr><tr>
+  <td class="n">2</td>
+  <td class="ti"><a href="https://kns.cnki.net/kns8s/defaultresult/index?crossids=YSTT4HG0%2CLSTPFY1C%2CEMRPGLPA%2CJUP3MUPD%2CMPMFIG1A%2CWQ0UVIAA%2CBLZOG7CK%2CPWFIRAGL%2CNLBO1Z6R%2CNN3FJMUV&korder=TI&kw=%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E5%9C%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E7%A0%94%E7%A9%B6%E8%BF%9B%E5%B1%95" target="_blank">注意力机制在深度学习中的研究进展</a></td>
+  <td class="y">2019</td>
+  <td class="c">1144</td>
+  <td class="tag">动机讲得最清</td>
+</tr><tr>
+  <td class="n">3</td>
+  <td class="ti"><a href="https://kns.cnki.net/kns8s/defaultresult/index?crossids=YSTT4HG0%2CLSTPFY1C%2CEMRPGLPA%2CJUP3MUPD%2CMPMFIG1A%2CWQ0UVIAA%2CBLZOG7CK%2CPWFIRAGL%2CNLBO1Z6R%2CNN3FJMUV&korder=TI&kw=%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E7%BB%BC%E8%BF%B0" target="_blank">卷积神经网络中的注意力机制综述</a></td>
+  <td class="y">2021</td>
+  <td class="c">920</td>
+  <td class="tag">唯一带基准实验</td>
+</tr><tr>
+  <td class="n">4</td>
+  <td class="ti"><a href="https://kns.cnki.net/kns8s/defaultresult/index?crossids=YSTT4HG0%2CLSTPFY1C%2CEMRPGLPA%2CJUP3MUPD%2CMPMFIG1A%2CWQ0UVIAA%2CBLZOG7CK%2CPWFIRAGL%2CNLBO1Z6R%2CNN3FJMUV&korder=TI&kw=%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%BA%94%E7%94%A8%E4%BA%8E%E6%97%B6%E5%BA%8F%E9%A2%84%E6%B5%8B%E7%A0%94%E7%A9%B6%E7%BB%BC%E8%BF%B0" target="_blank">深度学习应用于时序预测研究综述</a></td>
+  <td class="y">2023</td>
+  <td class="c">329</td>
+  <td class="tag">与物联网最贴</td>
+</tr><tr>
+  <td class="n">5</td>
+  <td class="ti"><a href="https://kns.cnki.net/kns8s/defaultresult/index?crossids=YSTT4HG0%2CLSTPFY1C%2CEMRPGLPA%2CJUP3MUPD%2CMPMFIG1A%2CWQ0UVIAA%2CBLZOG7CK%2CPWFIRAGL%2CNLBO1Z6R%2CNN3FJMUV&korder=TI&kw=%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E7%A0%94%E7%A9%B6%E7%BB%BC%E8%BF%B0" target="_blank">强化学习中的注意力机制研究综述</a></td>
+  <td class="y">2024</td>
+  <td class="c">88</td>
+  <td class="tag">分类方式最好</td>
+</tr><tr>
+  <td class="n">6</td>
+  <td class="ti"><a href="https://kns.cnki.net/kns8s/defaultresult/index?crossids=YSTT4HG0%2CLSTPFY1C%2CEMRPGLPA%2CJUP3MUPD%2CMPMFIG1A%2CWQ0UVIAA%2CBLZOG7CK%2CPWFIRAGL%2CNLBO1Z6R%2CNN3FJMUV&korder=TI&kw=%E7%BB%93%E5%90%88%E5%A4%9A%E5%A4%B4%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%B8%8EBiLSTM-CRF%E7%9A%84%E4%B8%AD%E6%96%87%E4%B8%B4%E5%BA%8A%E5%AE%9E%E4%BD%93%E8%AF%86%E5%88%AB" target="_blank">结合多头自注意力机制与BiLSTM-CRF的中文临床实体识别</a></td>
+  <td class="y">2021</td>
+  <td class="c">123</td>
+  <td class="tag">多头当组件（NLP）</td>
+</tr><tr>
+  <td class="n">7</td>
+  <td class="ti"><a href="https://kns.cnki.net/kns8s/defaultresult/index?crossids=YSTT4HG0%2CLSTPFY1C%2CEMRPGLPA%2CJUP3MUPD%2CMPMFIG1A%2CWQ0UVIAA%2CBLZOG7CK%2CPWFIRAGL%2CNLBO1Z6R%2CNN3FJMUV&korder=TI&kw=%E5%9F%BA%E4%BA%8E%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%9A%84CNN-LSTM%E7%9A%84%E6%8D%A2%E9%81%93%E6%84%8F%E5%9B%BE%E9%A2%84%E6%B5%8B" target="_blank">基于多头注意力的CNN-LSTM的换道意图预测</a></td>
+  <td class="y">2022</td>
+  <td class="c">80</td>
+  <td class="tag">多头当组件（时序）</td>
+</tr></tbody>
+  </table>
+</section>
+
+<section id="notes">
+  <h2><span class="num2">01</span>逐篇笔记</h2>
+  <p class="secdesc">按「先地图、再动机、再基准、再方向、最后组件」的顺序排列，建议也按这个顺序读。</p>
+  <article class="note">
+  <div class="nh">
+    <span class="idx">01</span>
+    <div class="nt">
+      <h3><a href="https://kns.cnki.net/kns8s/defaultresult/index?crossids=YSTT4HG0%2CLSTPFY1C%2CEMRPGLPA%2CJUP3MUPD%2CMPMFIG1A%2CWQ0UVIAA%2CBLZOG7CK%2CPWFIRAGL%2CNLBO1Z6R%2CNN3FJMUV&korder=TI&kw=%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E7%BB%BC%E8%BF%B0" target="_blank">注意力机制综述</a></h3>
+      <p class="nm">任欢;王旭光 <span class="dot">·</span> 计算机应用 <span class="dot">·</span> 2021-01-25
+         <span class="dot">·</span> 被引 <b>1380</b></p>
+    </div>
+    <div class="ntag">全景地图</div>
+  </div>
+  <p class="role">先读这篇建立地图</p>
+  <ul class="pts"><li>把注意力定义为「动态权重参数」：加强关键信息、弱化无用信息，同时记录信息间的<b>位置关系</b>。</li><li>按应用域铺开：图像处理、自然语言处理、数据预测三条线各讲一批结合注意力的算法结构。</li><li>重点介绍了 Transformer 与 Reformer 两类结构 —— 说明到 2021 年国内综述已把注意力等同于 Transformer 主线。</li><li>行文偏「有什么」，不给公式推导，适合当索引而不是当教材。</li></ul>
+  <details><summary>摘要原文（290 字）</summary><p class="abs">现在注意力机制已广泛地应用在深度学习的诸多领域。基于注意力机制的结构模型不仅能够记录信息间的位置关系,还能依据信息的权重去度量不同信息特征的重要性。通过对信息特征进行相关与不相关的抉择建立动态权重参数,以加强关键信息弱化无用信息,从而提高深度学习算法效率同时也改进了传统深度学习的一些缺陷。从图像处理、自然语言处理、数据预测等不同应用方面介绍了一些与注意力机制结合的算法结构,并对近几年大火的基于注意力机制的transformer和reformer算法进行了综述。鉴于注意力机制的重要性,综述了注意力机制的研究发展,分析了注意力机制目前的发展现状并探讨了该机制未来可行的研究方向。</p>
+  <p class="kw">关键词：注意力机制;深度学习;位置关系;信息特征;关键信息;transformer;reformer</p></details>
+</article><article class="note">
+  <div class="nh">
+    <span class="idx">02</span>
+    <div class="nt">
+      <h3><a href="https://kns.cnki.net/kns8s/defaultresult/index?crossids=YSTT4HG0%2CLSTPFY1C%2CEMRPGLPA%2CJUP3MUPD%2CMPMFIG1A%2CWQ0UVIAA%2CBLZOG7CK%2CPWFIRAGL%2CNLBO1Z6R%2CNN3FJMUV&korder=TI&kw=%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E5%9C%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E7%A0%94%E7%A9%B6%E8%BF%9B%E5%B1%95" target="_blank">注意力机制在深度学习中的研究进展</a></h3>
+      <p class="nm">朱张莉;饶元;吴渊;祁江楠;张钰 <span class="dot">·</span> 中文信息学报 <span class="dot">·</span> 2019-06-15
+         <span class="dot">·</span> 被引 <b>1144</b></p>
+    </div>
+    <div class="ntag">动机讲得最清</div>
+  </div>
+  <p class="role">补「注意力为什么被发明」</p>
+  <ul class="pts"><li>从 <b>Encoder-Decoder 框架的三个缺陷</b>切入：长程记忆能力有限、序列转换过程中的相互关系、模型动态结构输出质量 —— 这是注意力真正的历史动机。</li><li>给出注意力的定义与原理、多种分类方式，并落到图像识别 / 语音识别 / NLP 三个应用面。</li><li>额外讨论了<b>多模态注意力、注意力的评价机制、模型可解释性</b> —— 这三个词在 2019 年的中文综述里出现，说明作者的判断超前于当时主流。</li><li>偏 NLP（源语言—目标语言对齐），看 CV 的通道注意力要另找。</li></ul>
+  <details><summary>摘要原文（318 字）</summary><p class="abs">注意力机制逐渐成为目前深度学习领域的主流方法和研究热点之一,它通过改进源语言表达方式,在解码中动态选择源语言相关信息,从而极大改善了经典Encoder-Decoder框架的不足。该文在提出传统基于Encoder-Decoder框架中存在的长程记忆能力有限、序列转化过程中的相互关系、模型动态结构输出质量等问题的基础上,描述了注意力机制的定义和原理,介绍了多种不同的分类方式,分析了目前的研究现状,并叙述了目前注意力机制在图像识别、语音识别和自然语言处理等重要领域的应用情况。同时,进一步从多模态注意力机制、注意力的评价机制、模型的可解释性及注意力与新模型的融合等方面进行了探讨,从而为注意力机制在深度学习中的应用提供新的研究线索与方向。</p>
+  <p class="kw">关键词：深度学习;注意力机制;编码器—解码器</p></details>
+</article><article class="note">
+  <div class="nh">
+    <span class="idx">03</span>
+    <div class="nt">
+      <h3><a href="https://kns.cnki.net/kns8s/defaultresult/index?crossids=YSTT4HG0%2CLSTPFY1C%2CEMRPGLPA%2CJUP3MUPD%2CMPMFIG1A%2CWQ0UVIAA%2CBLZOG7CK%2CPWFIRAGL%2CNLBO1Z6R%2CNN3FJMUV&korder=TI&kw=%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E7%BB%BC%E8%BF%B0" target="_blank">卷积神经网络中的注意力机制综述</a></h3>
+      <p class="nm">张宸嘉;朱磊;俞璐 <span class="dot">·</span> 计算机工程与应用 <span class="dot">·</span> 2021-07-26
+         <span class="dot">·</span> 被引 <b>920</b></p>
+    </div>
+    <div class="ntag">唯一带基准实验</div>
+  </div>
+  <p class="role">三篇综述里唯一能当「实验参考」的</p>
+  <ul class="pts"><li>聚焦 CNN 侧的主流注意力方法，逐个提取<b>核心思想 + 实现过程</b>，并不只是罗列。</li><li>关键差异：它把每种方法<b>都实现了一遍</b>，并在「同型号辐射源设备实测数据」上做对比实验 —— 从综述升级成小规模基准测试。</li><li>结论落在「研究现状 + 未来发展方向」，且以实测结果支撑，不是拍脑袋。</li><li>如果你要选一个注意力模块塞进自己的 CNN，这篇比另外两篇实用。</li></ul>
+  <details><summary>摘要原文（191 字）</summary><p class="abs">注意力机制因其优秀的效果与即插即用的便利性,在深度学习任务中得到了越来越广泛的应用。主要着眼于卷积神经网络,对卷积网络注意力机制发展过程中的各种主流方法进行介绍,并对其核心思想与实现过程进行提取与总结,同时对每种注意力机制方法进行实现,针对同型号辐射源设备实测数据进行对比实验与结果分析,并依据主流方法的思想与实验的结果总结并阐述了卷积网络中的注意力机制的研究现状与未来其发展方向。</p>
+  <p class="kw">关键词：注意力机制;卷积神经网络;发展方向</p></details>
+</article><article class="note">
+  <div class="nh">
+    <span class="idx">04</span>
+    <div class="nt">
+      <h3><a href="https://kns.cnki.net/kns8s/defaultresult/index?crossids=YSTT4HG0%2CLSTPFY1C%2CEMRPGLPA%2CJUP3MUPD%2CMPMFIG1A%2CWQ0UVIAA%2CBLZOG7CK%2CPWFIRAGL%2CNLBO1Z6R%2CNN3FJMUV&korder=TI&kw=%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%BA%94%E7%94%A8%E4%BA%8E%E6%97%B6%E5%BA%8F%E9%A2%84%E6%B5%8B%E7%A0%94%E7%A9%B6%E7%BB%BC%E8%BF%B0" target="_blank">深度学习应用于时序预测研究综述</a></h3>
+      <p class="nm">梁宏涛;刘硕;杜军威;胡强;于旭 <span class="dot">·</span> 计算机科学与探索 <span class="dot">·</span> 2023-03-10
+         <span class="dot">·</span> 被引 <b>329</b></p>
+    </div>
+    <div class="ntag">与物联网最贴</div>
+  </div>
+  <p class="role">你做传感/时序预测时的入口</p>
+  <ul class="pts"><li>开篇就把问题定位在工程侧：<b>物联网数据采集设备大量接入、多维数据爆炸增长</b>，经典参数模型与传统 ML 难以满足效率与精度要求。</li><li>整理了时序数据的常见特性、<b>数据集与评价指标</b> —— 这一节比模型罗列更有用，可直接抄进实验设计。</li><li>以「时间 + 架构」双主线组织，并<b>实验对比</b>各算法特点、优势与局限；专门用一节对比多个基于 Transformer 的时序预测方法。</li><li>结论部分列了该方向的开放问题，可当选题清单。</li></ul>
+  <details><summary>摘要原文（391 字）</summary><p class="abs">时间序列一般是指对某种事物发展变化过程进行观测并按照一定频率采集得出的一组随机变量。时间序列预测的任务就是从众多数据中挖掘出其蕴含的核心规律并且依据已知的因素对未来的数据做出精确的估计。由于大量物联网数据采集设备的接入、多维数据的爆炸增长和对预测精度的要求愈发苛刻，经典的参数模型以及传统机器学习算法难以满足预测任务的高效率和高精度需求。近年来，以卷积神经网络、循环神经网络和Transformer模型为代表的深度学习算法在时间序列预测任务中取得了丰硕的成果。为进一步促进时间序列预测技术的发展，综述了时间序列数据的常见特性、数据集和模型的评价指标，并以时间和算法架构为研究主线，实验对比分析了各预测算法的特点、优势和局限；着重介绍对比了多个基于Transformer模型的时间序列预测方法；最后结合深度学习应用于时间序列预测任务存在的问题与挑战，对未来该方向的研究趋势进行了展望。</p>
+  <p class="kw">关键词：时间序列数据;时间序列预测;深度学习;Transformer模型</p></details>
+</article><article class="note">
+  <div class="nh">
+    <span class="idx">05</span>
+    <div class="nt">
+      <h3><a href="https://kns.cnki.net/kns8s/defaultresult/index?crossids=YSTT4HG0%2CLSTPFY1C%2CEMRPGLPA%2CJUP3MUPD%2CMPMFIG1A%2CWQ0UVIAA%2CBLZOG7CK%2CPWFIRAGL%2CNLBO1Z6R%2CNN3FJMUV&korder=TI&kw=%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E7%A0%94%E7%A9%B6%E7%BB%BC%E8%BF%B0" target="_blank">强化学习中的注意力机制研究综述</a></h3>
+      <p class="nm">夏庆锋;许可儿;李明阳;胡凯;宋利鹏 <span class="dot">·</span> 计算机科学与探索 <span class="dot">·</span> 2024-01-16
+         <span class="dot">·</span> 被引 <b>88</b></p>
+    </div>
+    <div class="ntag">分类方式最好</div>
+  </div>
+  <p class="role">注意力「不只用于序列」的证据</p>
+  <ul class="pts"><li>主线是注意力在<b>深度强化学习</b>中的作用，重心放在多智能体强化学习（MARL）。</li><li>分类不按模型而按<b>任务类型</b>：完全合作型、完全竞争型、混合合作竞争型 —— 这个切法比按网络结构分类更能解释「为什么要用注意力」（要建模智能体间的关系）。</li><li>还调研了该领域的实验平台，对想复现的人省事。</li><li>与你资料库里《深度强化学习实战》第 10 章（relational DQN）可以直接对接。</li></ul>
+  <details><summary>摘要原文（323 字）</summary><p class="abs">近年来，强化学习与注意力机制的结合在算法研究领域备受瞩目。在强化学习算法中，注意力机制的应用在提高算法性能方面发挥了重要作用。重点聚焦于注意力机制在深度强化学习中的发展，审视了其在多智能体强化学习领域的应用，并对相关研究成果进行调研。首先，介绍了注意力机制和强化学习的研究背景与发展历程，并调研了该领域中的相关实验平台；然后，回顾了强化学习与注意力机制的经典算法，并从不同角度对注意力机制进行分类；接着，对注意力机制在强化学习领域的应用进行了梳理，根据三种任务类型（完全合作型、完全竞争型和混合合作竞争型）进行分类分析，重点关注了多智能体领域的应用情况；最后，总结了注意力机制对强化学习算法的改进作用，并展望了该领域所面临的挑战和未来的研究方向。</p>
+  <p class="kw">关键词：强化学习;注意力机制;多智能体系统</p></details>
+</article><article class="note">
+  <div class="nh">
+    <span class="idx">06</span>
+    <div class="nt">
+      <h3><a href="https://kns.cnki.net/kns8s/defaultresult/index?crossids=YSTT4HG0%2CLSTPFY1C%2CEMRPGLPA%2CJUP3MUPD%2CMPMFIG1A%2CWQ0UVIAA%2CBLZOG7CK%2CPWFIRAGL%2CNLBO1Z6R%2CNN3FJMUV&korder=TI&kw=%E7%BB%93%E5%90%88%E5%A4%9A%E5%A4%B4%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E4%B8%8EBiLSTM-CRF%E7%9A%84%E4%B8%AD%E6%96%87%E4%B8%B4%E5%BA%8A%E5%AE%9E%E4%BD%93%E8%AF%86%E5%88%AB" target="_blank">结合多头自注意力机制与BiLSTM-CRF的中文临床实体识别</a></h3>
+      <p class="nm">罗熹;夏先运;安莹;陈先来 <span class="dot">·</span> 湖南大学学报(自然科学版) <span class="dot">·</span> 2021-04-22
+         <span class="dot">·</span> 被引 <b>123</b></p>
+    </div>
+    <div class="ntag">多头当组件（NLP）</div>
+  </div>
+  <p class="role">看「多头被塞进序列标注」的标准写法</p>
+  <ul class="pts"><li>任务：中文电子病历的临床命名实体识别（CNER），难点是文本结构与语言特殊性。</li><li>做法：<b>融合领域词典的字符级特征表示 + BiLSTM-CRF + 多头自注意力</b>，用多头去捕获字符间的依赖权重、语境与语义关联。</li><li>结论是「超过现有其他方法」，但<b>摘要里没有给头数、没有单头对照</b> —— 这是这类论文的通病（见下方结论三）。</li><li>可复用的点：领域词典注入 + 字符级表示，这个组合在中文小样本场景很好用。</li></ul>
+  <details><summary>摘要原文（346 字）</summary><p class="abs">命名实体是电子病历中相关医学知识的主要载体,因此,临床命名实体识别(Clinical Named Entity Recognition,CNER)也就成为了临床文本分析处理的基础性任务之一.由于文本结构和语言等方面的特殊性,面向中文电子病历(Electronic Medical Records,EMRs)的临床命名实体识别依然存在着巨大的挑战.本文提出了一种基于多头自注意力神经网络的中文临床命名实体识别方法.该方法使用了一种新颖的融合领域词典的字符级特征表示方法,并在BiLSTM-CRF模型的基础上,结合多头自注意力机制来准确地捕获字符间潜在的依赖权重、语境和语义关联等多方面的特征,从而有效地提升了中文临床命实体的识别能力.实验结果表明本文方法超过现有的其他方法获得了较优的识别性能.</p>
+  <p class="kw">关键词：中文电子病历;命名实体识别;长短期记忆;多头自注意力</p></details>
+</article><article class="note">
+  <div class="nh">
+    <span class="idx">07</span>
+    <div class="nt">
+      <h3><a href="https://kns.cnki.net/kns8s/defaultresult/index?crossids=YSTT4HG0%2CLSTPFY1C%2CEMRPGLPA%2CJUP3MUPD%2CMPMFIG1A%2CWQ0UVIAA%2CBLZOG7CK%2CPWFIRAGL%2CNLBO1Z6R%2CNN3FJMUV&korder=TI&kw=%E5%9F%BA%E4%BA%8E%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%9A%84CNN-LSTM%E7%9A%84%E6%8D%A2%E9%81%93%E6%84%8F%E5%9B%BE%E9%A2%84%E6%B5%8B" target="_blank">基于多头注意力的CNN-LSTM的换道意图预测</a></h3>
+      <p class="nm">高凯;李勋豪;胡林;陈彬;杜荣华 <span class="dot">·</span> 机械工程学报 <span class="dot">·</span> 2022-08-08
+         <span class="dot">·</span> 被引 <b>80</b></p>
+    </div>
+    <div class="ntag">多头当组件（时序）</div>
+  </div>
+  <p class="role">实验设计最接近你会做的事</p>
+  <ul class="pts"><li>任务：自动驾驶混行环境下预测车辆换道意图。数据用 <b>NGSIM</b>，特征分「横向位置 + 周围环境」两类。</li><li>结构：<b>多头注意力 + CNN + LSTM</b>。多头的作用是提高对输入序列的特征提取能力。</li><li>做了两层实验：<b>特征对比</b>（横向位置是主特征、环境是辅助）与<b>模型对比</b>（vs LSTM / CNN / CNN-LSTM，在换道前 1s、2s、3s 三个时刻比精度）。</li><li>这是七篇里实验写得最完整的一篇 —— 特征消融 + 模型对比 + 多时间尺度，可作为你自己论文的模板。</li></ul>
+  <details><summary>摘要原文（488 字）</summary><p class="abs">自动驾驶车辆与传统车辆混行的交通环境中，车辆的换道意图预测能够为自动驾驶车辆安全行驶提供有效保证。为了更准确地预测车辆的换道意图，将多头注意力与卷积神经网络(Convolution neural network, CNN)和长短时记忆(Long-short term memory, LSTM)网络结合，提出一种新型车辆换道意图预测算法。首先对NGSIM(Next generation Simulaion)数据集进行处理，提取车辆横向位置信息和周围环境信息。然后输入基于多头注意力(Multi-headattention)的CNN-LSTM模型，提高对输入序列特征的提取能力和预测精度。最后在NGSIM数据集验证该模型的有效性。试验结果表明，该模型能够从大量数据中提取到重要特征，同时通过特征对比试验发现，横向位置信息作为预测的主要特征，而周围环境信息作为预测的辅助特征。最后通过模型的对比试验得出，该模型的换道意图预测精度在换道前1 s、2 s、3 s相比于LSTM、CNN、CNN-LSTM模型具有更好的预测精度，可以为自动驾驶汽车设计先进的意图预测算法提供帮助和参考。</p>
+  <p class="kw">关键词：自动驾驶;换道意图;卷积神经网络;长短期记忆网络;多头注意力</p></details>
+</article>
+</section>
+
+<section id="finds">
+  <h2><span class="num2">02</span>把七篇摘要放在一起，看出三件事</h2>
+  <div class="finds">
+    <div class="find"><div class="fn">01</div><div>
+      <h4>中文文献对注意力的定义高度一致，且都停在「动态权重」这一层</h4>
+      <p>任欢与朱张莉相隔两年，定义几乎同构：<b>「依据信息权重度量特征重要性，加强关键信息、弱化无用信息」</b>。这个说法正确但不够用 —— 它没有解释 Query/Key/Value 的不对称性，也没解释为什么必须除以 √d<sub>k</sub>。这两层仍需英文教材（Bishop 12.1.2 / d2l 10.3）。</p>
+    </div></div>
+    <div class="find"><div class="fn">02</div><div>
+      <h4>「多头」在中文论文里是<b>增强模块</b>，几乎不作为研究对象</h4>
+      <p>两篇实证论文（罗熹、高凯）都是同一个套路：<b>多头 + 某种序列模型 + 对比实验</b>。摘要里能看到的收益表述是「提高特征提取能力」「识别性能更优」，但<b>都没有给头数、没有单头对照</b>。这意味着：想知道「多头到底比单头强多少」，中文文献给不了答案。</p>
+    </div></div>
+    <div class="find"><div class="fn">03</div><div>
+      <h4>最值得抄的不是结论，是<b>实验设计</b></h4>
+      <p>高凯那篇的结构可以直接当模板：数据（NGSIM）→ 两类特征（横向位置 / 环境）→ <b>特征消融</b>（谁是主特征）→ <b>模型对比</b>（vs LSTM / CNN / CNN-LSTM）→ <b>多时间尺度</b>（换道前 1s / 2s / 3s）。张宸嘉那篇的价值同样在这里：把每个注意力方法实现一遍再比。中文综述里愿意做实验的是少数，这两篇因此比被引更高的纯综述更实用。</p>
+    </div></div>
+  </div>
+</section>
+
+<section id="proc">
+  <h2><span class="num2">03</span>过程记录：三个必须说清的问题</h2>
+  <div class="warnbox">
+    <div><b>① 知网「篇名检索」的结果顺序会变。</b>同一个链接，昨天第一条是《注意力机制综述》（被引 1380），今天第一条变成 2026 年的《基于跨模态注意力机制的供水管网泄漏检测…》。所以第一版清单里「点标题 → 首条即目标」的假设不成立；本页所有链接请在结果页里<b>按题名核对</b>（该检索式通常只有 19 条，很好找）。</div>
+    <div><b>② 我第一遍抓错了，已废弃重做。</b>最初用「检索 → 点第一条 → 提取」的流程，抓到的是供水管网那篇的摘要，题目却对不上。原因是把结果页第一行当成了目标文献。改为「按题名逐字符匹配到那一行再点」后，7 篇全部通过题名校验。</div>
+    <div><b>③ 有一篇没取到。</b>《融合多头注意力机制及GWO-LSTM的地铁流量预测》用短关键词检索只返回同类论文、不含目标（疑似网络首发尚未进篇名索引）。它在这份笔记里缺失，不是被删掉。</div>
+  </div>
+</section>
+
+<footer>
+  数据来源：中国知网（kns.cnki.net）详情页 · 题名 / 作者 / 来源 / 摘要 / 关键词均为页面实抓 · 抓取 2026-10-23 13:0x–13:2x<br>
+  操作方式：浏览器 CDP，逐篇按篇名检索后精确匹配行，单次会话 9 次检索、间隔 ≥18 秒，<b>仅读摘要，未下载任何全文、未绕过任何验证码</b><br>
+  配套：《中文文献清单-注意力与多头注意力.html》（18 条题录）· 《技术点索引-注意力与多头注意力.html》（本地 PDF 页码）
+</footer>
+</main>
+</div>
+</body>
+</html>
