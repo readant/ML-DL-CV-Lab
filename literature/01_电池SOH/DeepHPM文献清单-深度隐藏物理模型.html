@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DeepHPM 文献清单 — 深度隐藏物理模型</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --ink2:#4a4a4a; --ink3:#767676;
+    --line:#e2e0d9; --bg:#faf9f6; --card:#ffffff;
+    --accent:#8a5a2b; --accent-bg:#fdf6ec;
+    --ok:#1d6f4a; --ok-bg:#eef7f2;
+    --warn:#9a5b12; --warn-bg:#fdf3e3;
+    --bad:#a33b3b; --bad-bg:#fbeeee;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    font-size:15px; line-height:1.75;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:48px 28px 80px}
+  header{border-bottom:2px solid var(--ink);padding-bottom:22px;margin-bottom:34px}
+  h1{font-size:30px;margin:0 0 6px;letter-spacing:.3px}
+  .sub{color:var(--ink2);font-size:16px;margin:0 0 16px;font-style:italic}
+  .meta{font-size:13px;color:var(--ink3);line-height:1.9}
+  .meta b{color:var(--ink2);font-weight:600}
+  h2{font-size:20px;margin:44px 0 14px;padding-left:12px;border-left:4px solid var(--accent)}
+  h2 .n{color:var(--accent);font-size:15px;margin-right:8px;font-weight:600}
+  p{margin:10px 0}
+  .callout{background:var(--accent-bg);border:1px solid #ecd9bd;border-radius:10px;padding:18px 20px;margin:18px 0}
+  .callout p:first-child{margin-top:0}
+  .callout p:last-child{margin-bottom:0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:12px 0;transition:border-color .15s}
+  .card:hover{border-color:#c9c5b8}
+  .card .t{font-size:15.5px;font-weight:600;line-height:1.5;margin-bottom:6px}
+  .card .t a{color:var(--ink);text-decoration:none;border-bottom:1px solid #cfcabc}
+  .card .t a:hover{color:var(--accent);border-color:var(--accent)}
+  .card .a{font-size:13.5px;color:var(--ink2);margin-bottom:6px}
+  .card .v{font-size:13px;color:var(--ink3)}
+  .card .v b{color:var(--ink2);font-weight:600}
+  .card .why{font-size:13.5px;color:var(--ink2);margin-top:9px;padding-top:9px;border-top:1px dashed var(--line)}
+  .card .why b{color:var(--accent)}
+  .tag{display:inline-block;font-size:11.5px;padding:1px 8px;border-radius:20px;margin-right:6px;vertical-align:2px;font-weight:600;letter-spacing:.2px}
+  .t-core{background:var(--ok-bg);color:var(--ok)}
+  .t-hot{background:var(--bad-bg);color:var(--bad)}
+  .t-todo{background:var(--warn-bg);color:var(--warn)}
+  .t-cn{background:#eef1f7;color:#3a4a6b}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  th{background:#f4f2ec;font-weight:600;color:var(--ink2)}
+  code{background:#f2f0ea;padding:1px 6px;border-radius:4px;font-size:13px;font-family:ui-monospace,Consolas,monospace}
+  ul{padding-left:22px;margin:10px 0}
+  li{margin:6px 0}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>DeepHPM 文献清单</h1>
+  <p class="sub">Deep Hidden Physics Models · 深度隐藏物理模型</p>
+  <div class="meta">
+    <b>检索日期</b>　2026-10-26<br>
+    <b>检索平台</b>　中国知网（CNKI）· Google 学术 · SpringerLink · ScienceDirect · OpenAlex<br>
+    <b>检索词</b>　<code>deep hidden physics</code> / <code>hidden physics models</code> / <code>深度隐藏物理</code><br>
+    <b>受阻平台</b>　IEEE Xplore（前端检索接口报错）· Web of Science（代理导致机构授权失效，跳转 Clarivate 登录）· 百度学术（403 安全验证）
+  </div>
+</header>
+
+<h2><span class="n">01</span>核心认定：DeepHPM 到底是什么</h2>
+
+<div class="callout">
+<p><b>DeepHPM</b> 指 <i>Deep Hidden Physics Models</i>：用神经网络<b>同时逼近「解」和「隐藏的动力学算子」</b>，在<b>不预设偏微分方程形式</b>的前提下，从观测数据中反推控制方程。</p>
+<p>两个网络：解代理网络 <code>F(x,t)</code> 拟合状态量；动力学网络 <code>G(u,λ)</code> 拟合未知的非线性算子。残差 <code>f = u<sub>t</sub> − N(u,λ) ≈ 0</code> 作为物理约束项进入损失函数，导数由自动微分精确求取。</p>
+<p><b>与 PINN 的分界</b>：PINN 假定方程结构已知、只学未知参数；DeepHPM 连<b>方程结构</b>都要从数据里学出来。二者常被混用，但这是关键区别。</p>
+</div>
+
+<h2><span class="n">02</span>两篇源头论文（必须先分清）</h2>
+
+<div class="card">
+  <div class="t"><span class="tag t-core">奠基</span><a href="https://doi.org/10.1016/j.jcp.2017.11.039" target="_blank">Hidden physics models: Machine learning of nonlinear partial differential equations</a></div>
+  <div class="a">Maziar Raissi, George Em Karniadakis</div>
+  <div class="v"><b>Journal of Computational Physics</b>, 2018 · DOI <code>10.1016/j.jcp.2017.11.039</code> · 被引 <b>1351</b>（OpenAlex）</div>
+  <div class="why"><b>为什么重要：</b>这是整个 HPM 家族的起点，被引量远高于常被误认的那篇。做文献综述时它是第一顺位引用。<b>注意标题里没有 "Deep"</b>，容易被漏检。</div>
+</div>
+
+<div class="card">
+  <div class="t"><span class="tag t-core">命名来源</span><a href="https://arxiv.org/abs/1801.06637" target="_blank">Deep Hidden Physics Models: Deep Learning of Nonlinear Partial Differential Equations</a></div>
+  <div class="a">Maziar Raissi, Paris Perdikaris, George Em Karniadakis</div>
+  <div class="v"><b>arXiv:1801.06637</b>（2018-01-18）· 正式版 <b>JMLR</b>, 2018 · DOI <code>10.5555/3291125.3291150</code> · 被引 <b>605</b>（arXiv 版）</div>
+  <div class="why"><b>为什么重要：</b>"<b>Deep</b> HPM" 这个名字就是从这篇来的，用多层网络替换浅层结构。写"DeepHPM"时应当引这篇；写方法源头时两篇一起引。</div>
+</div>
+
+<h2><span class="n">03</span>注意力 × DeepHPM（与黑板两个词直接对应）</h2>
+
+<p>导师把<b>「注意力」</b>与<b>「DeepHPM」</b>写在一起，最可能指的就是这一支：在 DeepHPM / PINN 的<b>特征提取</b>或<b>物理约束</b>环节加入注意力，用于解决"不同传感器、不同时间步的重要性并不相同"的问题。</p>
+
+<div class="card">
+  <div class="t"><span class="tag t-hot">最对口</span><a href="https://doi.org/10.1016/j.aei.2024.102958" target="_blank">Spatio-temporal attention-based hidden physics-informed neural network for remaining useful life prediction</a></div>
+  <div class="a">Feilong Jiang, Xiaonan Hou, Min Xia</div>
+  <div class="v"><b>Advanced Engineering Informatics</b>, 2025 · DOI <code>10.1016/j.aei.2024.102958</code> · 被引 <b>70</b> · 开放获取</div>
+  <div class="why"><b>为什么重要：</b>标题同时含 <b>attention</b> + <b>hidden physics</b>，是"注意力 + DeepHPM"这一组合最直接的落地论文。做法是对传感器维（空间）与时间步（时间）分别施加自注意力加权，再把特征送入隐藏物理模块。剩余寿命（RUL）预测场景。<b>建议作为精读的第一篇。</b></div>
+</div>
+
+<div class="card">
+  <div class="t"><span class="tag t-todo">线索待核</span>AttnPINN / DSCN-AttnPINN（Liao 等）</div>
+  <div class="a">据《Journal of Advanced Manufacturing Science and Technology》2024 年综述性引用转述</div>
+  <div class="v"><b>状态</b>　未直接取得原文题录，作者与刊物信息需回原文核实</div>
+  <div class="why"><b>已掌握的线索：</b>AttnPINN 把自注意力引入两处——特征提取阶段（建模不同传感器重要性）与物理约束阶段（给隐状态各物理量分配权重）；后续 DSCN-AttnPINN 再叠加深度可分离卷积。<b>这条线是"注意力增强 DeepHPM"的方法学正统来源，值得回溯原文。</b></div>
+</div>
+
+<h2><span class="n">04</span>方法演进线</h2>
+
+<div class="card">
+  <div class="t"><a href="https://doi.org/10.1038/s42005-026-02743-z" target="_blank">Enforcing hidden physics in physics-informed neural networks</a></div>
+  <div class="a">Nanxi Chen, Sifan Wang, Rujin Ma, Airong Chen</div>
+  <div class="v"><b>Communications Physics</b>, 2026 · DOI <code>10.1038/s42005-026-02743-z</code> · 开放获取</div>
+  <div class="why">SpringerLink 检索的第 1 顺位命中。主题是"如何把隐藏物理真正<b>强约束</b>进 PINN"，属于 DeepHPM 的强化路线。</div>
+</div>
+
+<div class="card">
+  <div class="t"><a href="https://doi.org/10.1038/s41467-021-26434-1" target="_blank">Physics-informed learning of governing equations from scarce data</a></div>
+  <div class="a">Zhao Chen, Yang Liu, Hao Sun</div>
+  <div class="v"><b>Nature Communications</b>, 2021 · DOI <code>10.1038/s41467-021-26434-1</code> · 被引 <b>615</b></div>
+  <div class="why">小样本条件下从数据学控制方程的标杆工作。若导师关心"数据少怎么办"，这篇是必读对照。</div>
+</div>
+
+<div class="card">
+  <div class="t"><a href="https://doi.org/10.1016/j.cma.2026.118926" target="_blank">Learning hidden physics and system parameters with deep operator networks</a></div>
+  <div class="a">Dibakar Roy Sarkar, Vijay Kag, Birupaksha Pal, Somdatta Goswami</div>
+  <div class="v"><b>Computer Methods in Applied Mechanics and Engineering</b>, 2026 · DOI <code>10.1016/j.cma.2026.118926</code></div>
+  <div class="why">用 DeepONet 同时学隐藏物理与系统参数，是算符学习（operator learning）与 HPM 的交叉，属较新方向。</div>
+</div>
+
+<div class="card">
+  <div class="t"><a href="https://www.sciencedirect.com/search?qs=%22hidden%20physics%22" target="_blank">KAN-ODEs: Kolmogorov–Arnold network ordinary differential equations for learning dynamical systems and hidden physics</a></div>
+  <div class="a">Benjamin C. Koenig, Suyong Kim, Sili Deng</div>
+  <div class="v"><b>Computer Methods in Applied Mechanics and Engineering</b>, 2024</div>
+  <div class="why">把 KAN（Kolmogorov–Arnold 网络）接到 ODE 学习上，用于发现隐藏物理。KAN 是 2024 年的热点结构，可作为"新型网络骨干 + HPM"的思路来源。</div>
+</div>
+
+<div class="card">
+  <div class="t">Stabilized hidden physics models via hybrid kernels for the data-driven discovery of nonlinear PDEs</div>
+  <div class="a">Meysam Cheraghi, Mohsen Esmaeilbeigi, Ebrahim Nazari</div>
+  <div class="v"><b>Communications in Nonlinear Science and Numerical Simulation</b>, 2026</div>
+  <div class="why">针对 HPM 的<b>数值稳定性</b>做改进（混合核）。若复现时遇到训练不稳定，这篇是直接解法参考。</div>
+</div>
+
+<h2><span class="n">05</span>应用线（可作为课题落点）</h2>
+
+<table>
+  <thead><tr><th>方向</th><th>代表文献</th><th>要点</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>剩余寿命 / 故障预测</td>
+      <td>Spatio-temporal attention-based HPINN（2025）<br>SiMBA-Augmented PINN for industrial RUL（2025, <i>Machines</i>）<br>Physics-Constrained Bayesian NN for machinery RUL（2025, <i>RESS</i>）</td>
+      <td>最活跃的应用簇，注意力、贝叶斯、数据增强都往里加；工程指标明确（RMSE + 可解释性）</td>
+    </tr>
+    <tr>
+      <td>电池健康</td>
+      <td>PINN for Prognostics and Health Management of Li-Ion Batteries（2023, <i>IEEE T-IV</i>，被引 211）</td>
+      <td>与课题组硬件/数据条件最容易对接，公开数据集（如 NASA、XJTU-SY）成熟</td>
+    </tr>
+    <tr>
+      <td>地球物理 / 波动方程</td>
+      <td>Hidden physics model for parameter estimation of elastic wave equations（2021, <i>CMAME</i>）</td>
+      <td>反演参数而非仅拟合波形，数学门槛较高但创新空间大</td>
+    </tr>
+    <tr>
+      <td>生物 / 流体</td>
+      <td>Deep Hidden Physics Modeling of Cell Signaling Networks（2021, <i>Current Genomics</i>）<br>Deep Learning of Turbulent Scalar Mixing（2019, <i>Phys. Rev. Fluids</i>，被引 71）<br>Hidden Fluid Mechanics（2018, arXiv:1808.04327，被引 308）</td>
+      <td>HPM 的经典验证场景，适合做"方法能否泛化"的对照实验</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2><span class="n">06</span>中文文献现状（知网实测结论）</h2>
+
+<div class="callout">
+<p><b>结论：中文里几乎没有以 DeepHPM 为名的专门文献。</b></p>
+<p>知网「主题」检索 <code>深度隐藏物理</code> 仅 <b>8 条</b>，且全部是 PINN 相关学位论文与会议论文；「篇名」检索 <code>隐藏物理</code> 33 条，绝大多数是<b>高中物理教学</b>与信息隐藏类文章，与 DeepHPM 无关。</p>
+<p><b>含义：</b>这个技术点的文献必须<b>以英文为主</b>；中文侧只能借 PINN / 物理信息神经网络 的综述与学位论文做背景铺垫，不能作为主要引用来源。</p>
+</div>
+
+<p>可作为中文背景参考的（均非 DeepHPM 本体）：</p>
+<ul>
+  <li>《一种改进的物理信息神经网络及其应用》，董泓言，吉林大学硕士，2025</li>
+  <li>《一类时谐 Maxwell 方程混合格式的物理信息神经网络解法》，彭吉康，四川大学硕士，2024</li>
+  <li>《基于物理信息神经网络的时间扰动波动方程求解》，陈莹真、黄兴国，第六届油气地球物理学术年会，2024</li>
+</ul>
+
+<h2><span class="n">07</span>检索记录与未完成项</h2>
+
+<table>
+  <thead><tr><th>平台</th><th>检索式</th><th>结果量</th><th>状态</th></tr></thead>
+  <tbody>
+    <tr><td>中国知网</td><td>主题「深度隐藏物理」/ 篇名「隐藏物理」</td><td>8 / 33</td><td style="color:var(--ok)">成功（校园网授权）</td></tr>
+    <tr><td>Google 学术</td><td><code>"Deep Hidden Physics Models"</code>、<code>intitle:"hidden physics models"</code></td><td>10 / 1</td><td style="color:var(--ok)">成功（需代理）</td></tr>
+    <tr><td>SpringerLink</td><td><code>"hidden physics"</code>（限 Article）</td><td>133</td><td style="color:var(--ok)">成功</td></tr>
+    <tr><td>ScienceDirect</td><td><code>"hidden physics"</code></td><td>255</td><td style="color:var(--ok)">成功</td></tr>
+    <tr><td>OpenAlex</td><td>API 精确题名匹配</td><td>12 + 7</td><td style="color:var(--ok)">成功（零风控）</td></tr>
+    <tr><td>IEEE Xplore</td><td><code>"hidden physics"</code></td><td>—</td><td style="color:var(--bad)">前端检索接口报错，未取到结果</td></tr>
+    <tr><td>Web of Science</td><td>基本检索</td><td>—</td><td style="color:var(--warn)">代理导致校园 IP 授权失效，跳转机构登录</td></tr>
+    <tr><td>百度学术</td><td><code>Deep Hidden Physics Models</code></td><td>—</td><td style="color:var(--bad)">403 安全验证</td></tr>
+  </tbody>
+</table>
+
+<p><b>下一步建议：</b></p>
+<ul>
+  <li><b>补 IEEE 与 WoS</b>：关闭代理后直连，或对这两个域名配置「直连」分流规则，保持校园 IP 出口。</li>
+  <li><b>精读 1 篇</b>：优先 <i>Spatio-temporal attention-based HPINN</i>（2025），它是黑板两个词的交点。</li>
+  <li><b>复现 1 个最小案例</b>：建议 1D Burgers 方程的反问题——数据少、算得快、能直接对照 JCP 2018 原文结果。</li>
+</ul>
+
+<footer>
+  本清单由自动化检索整理，题录信息来自各平台公开页面与 OpenAlex / arXiv 官方接口。<br>
+  被引数分别标注来源平台，不同平台统计口径不同，写论文时请以单一来源为准。<br>
+  所有"为什么重要"均为整理时的判断，<b>非论文原文摘要</b>，引用前请核对原文。
+</footer>
+
+</div>
+</body>
+</html>

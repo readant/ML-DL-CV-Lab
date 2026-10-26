@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>电池 SOH · 注意力 × DeepHPM 文献地图</title>
+<style>
+  :root{
+    --ink:#181818; --ink2:#464646; --ink3:#787878;
+    --line:#e3e1da; --bg:#faf9f6; --card:#fff;
+    --accent:#8a5a2b; --accent-bg:#fdf6ec;
+    --ok:#1d6f4a; --ok-bg:#eef7f2;
+    --warn:#9a5b12; --warn-bg:#fdf3e3;
+    --bad:#a33b3b; --bad-bg:#fbeeee;
+    --info:#2c5282; --info-bg:#eef3fa;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    font-size:15px;line-height:1.75}
+  .wrap{max-width:1000px;margin:0 auto;padding:48px 28px 80px}
+  header{border-bottom:2px solid var(--ink);padding-bottom:22px;margin-bottom:32px}
+  h1{font-size:29px;margin:0 0 6px}
+  .sub{color:var(--ink2);font-size:15.5px;margin:0 0 16px;font-style:italic}
+  .meta{font-size:13px;color:var(--ink3);line-height:1.9}
+  .meta b{color:var(--ink2);font-weight:600}
+  h2{font-size:20px;margin:46px 0 14px;padding-left:12px;border-left:4px solid var(--accent)}
+  h2 .n{color:var(--accent);font-size:15px;margin-right:8px;font-weight:600}
+  p{margin:10px 0}
+  .lead{background:var(--info-bg);border:1px solid #cddcf0;border-radius:10px;padding:20px 22px;margin:20px 0}
+  .lead p{margin:8px 0}
+  .lead p:first-child{margin-top:0}
+  .lead p:last-child{margin-bottom:0}
+  .callout{background:var(--accent-bg);border:1px solid #ecd9bd;border-radius:10px;padding:16px 20px;margin:16px 0}
+  .callout.warn{background:var(--warn-bg);border-color:#ecd3a8}
+  .callout p:first-child{margin-top:0}
+  .callout p:last-child{margin-bottom:0}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:#f4f2ec;font-weight:600;color:var(--ink2)}
+  td.mono{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;background:#f7f6f2}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin:11px 0}
+  .card .t{font-size:15px;font-weight:600;line-height:1.5;margin-bottom:5px}
+  .card .t a{color:var(--ink);text-decoration:none;border-bottom:1px solid #cfcabc}
+  .card .t a:hover{color:var(--accent);border-color:var(--accent)}
+  .card .a{font-size:13.5px;color:var(--ink2);margin-bottom:4px}
+  .card .v{font-size:12.8px;color:var(--ink3)}
+  .card .v b{color:var(--ink2)}
+  .why{font-size:13.3px;color:var(--ink2);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+  .why b{color:var(--accent)}
+  .tag{display:inline-block;font-size:11.5px;padding:1px 8px;border-radius:20px;margin-right:6px;vertical-align:2px;font-weight:600}
+  .t-base{background:var(--ok-bg);color:var(--ok)}
+  .t-attn{background:var(--bad-bg);color:var(--bad)}
+  .t-occ{background:var(--warn-bg);color:var(--warn)}
+  .t-open{background:var(--info-bg);color:var(--info)}
+  code{background:#f2f0ea;padding:1px 6px;border-radius:4px;font-size:13px;font-family:ui-monospace,Consolas,monospace}
+  ul{padding-left:22px;margin:10px 0}
+  li{margin:6px 0}
+  .kpi{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0}
+  .kpi div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 18px;flex:1;min-width:150px}
+  .kpi .v{font-size:24px;font-weight:600;color:var(--accent);line-height:1.2}
+  .kpi .k{font-size:12.5px;color:var(--ink3);margin-top:2px}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>电池 SOH · 注意力 × DeepHPM 文献地图</h1>
+  <p class="sub">为 nc-PINN（PINN4SOH）项目的方向定位而整理</p>
+  <div class="meta">
+    <b>整理日期</b>　2026-10-26　·　<b>数据来源</b>　Google 学术、ScienceDirect、SpringerLink、OpenAlex<br>
+    <b>检索式</b>　<code>"physics-informed" attention "state of health" lithium battery</code>
+  </div>
+</header>
+
+<h2><span class="n">01</span>先说结论：这不是新方向，是给你已有模型加一层</h2>
+
+<div class="lead">
+<p><b>你项目里跑的 PINN4SOH，本身就是一个 DeepHPM 实例。</b></p>
+<p>DeepHPM 的定义是「解代理网络 + 隐藏动力学网络 + 残差物理约束」。对照你的代码：</p>
+</div>
+
+<table>
+  <thead><tr><th>DeepHPM 概念</th><th>PINN4SOH 里的对应物</th><th>形状 / 作用</th></tr></thead>
+  <tbody>
+    <tr><td>解代理网络 <code>F(x,t)</code></td><td class="mono">Solution_u</td><td>MLP 17→60→60→32 + Predictor 32→32→1，Sin 激活 + Dropout 0.2，输出 SOH</td></tr>
+    <tr><td>隐藏动力学网络 <code>G(u,λ)</code></td><td class="mono">dynamical_F</td><td>MLP 35→60→60→1，输入 <code>concat(x, t, u, u_x, u_t)</code></td></tr>
+    <tr><td>PDE 残差 <code>f = u<sub>t</sub> − N(u,λ)</code></td><td class="mono">loss2</td><td>残差项，权重 α（XJTU 0.7 / TJU 1.0）</td></tr>
+    <tr><td>数据拟合项</td><td class="mono">loss1</td><td>SOH 标签 MSE</td></tr>
+    <tr><td>物理先验（附加）</td><td class="mono">loss3</td><td>ReLU 单调性约束，权重 β。注意用的是 <code>.sum()</code> 不是 <code>.mean()</code></td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+<p><b>所以黑板上的「注意力 + Deep HPM」，对你的真实含义是：</b>在你已经跑通的 PINN4SOH 上，把<b>注意力</b>插进去——而不是从零学一个新框架。这与你 skill 里规划的 <b>L3「物理约束增强」</b>路线是同一条。</p>
+</div>
+
+<h2><span class="n">02</span>你的项目基准（两篇必引）</h2>
+
+<div class="card">
+  <div class="t"><span class="tag t-base">项目基础论文</span><a href="https://doi.org/10.1038/s41467-024-48779-z" target="_blank">Physics-informed neural network for lithium-ion battery degradation stable modeling and prognosis</a></div>
+  <div class="a">Fujin Wang, Zhi Zhai, Zhibin Zhao, Yi Di 等</div>
+  <div class="v"><b>Nature Communications</b>, 2024 · DOI <code>10.1038/s41467-024-48779-z</code> · 被引 <b>886</b></div>
+  <div class="why"><b>这是你正在验证的那篇</b>（官方代码 PINN4SOH）。综述里它必须作为你的方法基线出现，被引 886 也说明这条线足够热。</div>
+</div>
+
+<div class="card">
+  <div class="t"><a href="https://doi.org/10.1109/tiv.2023.3315548" target="_blank">Physics-Informed Neural Networks for Prognostics and Health Management of Lithium-Ion Batteries</a></div>
+  <div class="a">Pengfei Wen, Zhi-Sheng Ye, Yong Li, Shaowei Chen 等</div>
+  <div class="v"><b>IEEE Transactions on Intelligent Vehicles</b>, 2023 · DOI <code>10.1109/tiv.2023.3315548</code> · 被引 <b>211</b></div>
+  <div class="why">电池 PHM 方向 PINN 的另一篇高被引。做文献综述时的第二支柱，代表"从健康管理整体框架看 PINN"的视角。</div>
+</div>
+
+<h2><span class="n">03</span>核心簇：注意力 / Transformer + 物理约束 + 电池 SOH</h2>
+
+<p>下面这批就是导师那两个词在电池领域的<b>实际落地形态</b>。按"注意力以什么形式加入"分成三类，便于你判断自己做哪一种。</p>
+
+<h3 style="font-size:16px;margin:26px 0 8px;color:var(--accent)">A 类 · 特征维注意力（对 17 维输入加权）</h3>
+
+<div class="card">
+  <div class="t"><span class="tag t-attn">最易复用</span><span class="tag t-open">开放获取</span><a href="https://doi.org/10.3390/en18236270" target="_blank">An Attention-Based Multi-Feature Fusion Physics-Informed Neural Network for State-of-Health Estimation of Lithium-Ion Batteries</a></div>
+  <div class="a">Hai-wei Wu, Jianwei Liu, Zhihao Wang, Xuexin Li</div>
+  <div class="v"><b>Energies</b>, 2025 · DOI <code>10.3390/en18236270</code> · 被引 4 · <b>MDPI 开放获取，全文可直接下</b></div>
+  <div class="why"><b>已取到摘要，实测结论见下方"竞品解剖"——它用的正是 XJTU 与 TJU 数据集，与你的项目完全重合。</b></div>
+</div>
+
+<div class="card">
+  <div class="t"><span class="tag t-attn">可解释性</span><a href="https://doi.org/10.1016/j.energy.2026.142247" target="_blank">An attention-guided residual block-based physics-informed neural network for interpretable SOH estimation of lithium-ion batteries</a></div>
+  <div class="a">Delong Zheng, Changhui Liu, Xiaojia Liu, Jiewu Leng</div>
+  <div class="v"><b>Energy</b>, 2026 · DOI <code>10.1016/j.energy.2026.142247</code> · 被引 0（新刊出）</div>
+  <div class="why">把注意力嵌进<b>残差块</b>，主打"<b>可解释</b>"。若导师看重"物理约束带来的可解释性"，这篇的叙述框架值得借。</div>
+</div>
+
+<h3 style="font-size:16px;margin:26px 0 8px;color:var(--accent)">B 类 · 时序 / 结构替换（Transformer、图网络）</h3>
+
+<div class="card">
+  <div class="t"><span class="tag t-attn">基线对照</span><a href="https://doi.org/10.1016/j.ijepes.2025.111173" target="_blank">Integrating transformers into physics-informed neural networks: An approach to lithium-ion battery state-of-health prognostics</a></div>
+  <div class="a">Yichen Zhan, Kehuan Yan, Xianghan Zheng</div>
+  <div class="v"><b>International Journal of Electrical Power &amp; Energy Systems</b>, 2025 · DOI <code>10.1016/j.ijepes.2025.111173</code> · 被引 14</div>
+  <div class="why">把 Transformer 整块换进 PINN 骨架。属于"重改装"路线，算力要求高，适合做<b>对照基线</b>而不是主方案。</div>
+</div>
+
+<div class="card">
+  <div class="t"><span class="tag t-attn">最前沿</span><a href="https://doi.org/10.1088/1361-6501/ae5fc0" target="_blank">A learnable graph spatiotemporal attention physics-informed network for lithium-ion battery state-of-health estimation</a></div>
+  <div class="a">Pingping Wang, Longsheng Cheng, Hanting Zhou</div>
+  <div class="v"><b>Measurement Science and Technology</b>, 2026 · DOI <code>10.1088/1361-6501/ae5fc0</code> · 被引 1</div>
+  <div class="why"><b>可学习图 + 时空注意力</b>，把电池组内单元关系建成图。如果导师想要"新意足够强"的点，这类图结构是最有空间的；但工程量也最大。</div>
+</div>
+
+<h3 style="font-size:16px;margin:26px 0 8px;color:var(--accent)">C 类 · 层级 / 多尺度结构</h3>
+
+<div class="card">
+  <div class="t"><a href="https://doi.org/10.1016/j.energy.2025.138229" target="_blank">Physics-informed hierarchical perception modulation network for lithium-ion battery health management</a></div>
+  <div class="a">Shuai Hao, Jirou Feng, Jinrun Dong, Wenyue Cui 等</div>
+  <div class="v"><b>Energy</b>, 2025 · DOI <code>10.1016/j.energy.2025.138229</code> · 被引 6</div>
+  <div class="why">"层级感知调制"——多尺度特征按层级调制进估计模块。结构最贴近你说的 HPM/HPM-Net 那类思路。</div>
+</div>
+
+<div class="card">
+  <div class="t"><span class="tag t-attn">被引最高</span><a href="https://doi.org/10.1016/j.est.2025.119549" target="_blank">A time series physics-informed neural network framework for the state of health estimation of lithium-ion batteries</a></div>
+  <div class="a">Weina Zhang, Hao Zhang, Zhongqin Bi</div>
+  <div class="v"><b>Journal of Energy Storage</b>, 2025 · DOI <code>10.1016/j.est.2025.119549</code> · 被引 <b>34</b></div>
+  <div class="why">本簇中除基础论文外被引最高的一篇，做<b>时序 PINN 框架</b>。写综述时不能漏。</div>
+</div>
+
+<div class="card">
+  <div class="t"><a href="https://doi.org/10.1109/tie.2026.3654776" target="_blank">A Robust State of Health Estimation Method for Lithium-Ion Batteries Based on Physics-Informed Enhancement</a></div>
+  <div class="a">Yingzhou Wang, Huaiwen Yu, Tianyi Ma, Jianguo Wang 等</div>
+  <div class="v"><b>IEEE Transactions on Industrial Electronics</b>, 2026 · DOI <code>10.1109/tie.2026.3654776</code> · 被引 1</div>
+  <div class="why">IEEE 顶刊，主打"鲁棒性"。论述物理约束如何提升抗噪/抗分布漂移，是审稿人常问的点。</div>
+</div>
+
+<h2><span class="n">04</span>竞品解剖：Energies 2025 到底做了什么（已读摘要）</h2>
+
+<p>这篇是唯一开放获取的直接竞品，我已取到其摘要正文。它的做法<b>比预想的更全面</b>，必须逐条对照。</p>
+
+<table>
+  <thead><tr><th>它做的事</th><th>具体做法（摘要原文信息）</th><th>对你意味着什么</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><b>多域特征工程</b></td>
+      <td>整合<b>时域、频域、小波域</b>三类指标，捕捉宏观退化趋势与微观动力学</td>
+      <td>比你的 17 维特征更宽；单靠"多加特征"已无新意</td>
+    </tr>
+    <tr>
+      <td><b>双相关特征筛选</b></td>
+      <td><b>Pearson 相关系数 + 最大信息系数（MIC）</b>联合筛选退化敏感变量</td>
+      <td>特征选择这一环也已被标准化做法占住</td>
+    </tr>
+    <tr>
+      <td><b>注意力机制</b></td>
+      <td>模型名为 AM-MFF-PINN（Attention Mechanism–Multi-Feature Fusion）</td>
+      <td>「注意力 + 多特征」这个组合已被占用</td>
+    </tr>
+    <tr style="background:var(--warn-bg)">
+      <td><b>动态损失平衡</b></td>
+      <td>自适应协调<b>数据拟合项</b>与<b>物理约束项</b>，保证收敛稳健</td>
+      <td><b>这一条最关键：</b>它用动态权重自动解决了 α/β 手工设定问题</td>
+    </tr>
+    <tr>
+      <td><b>数据集</b></td>
+      <td><b>XJTU + TJU</b>（西安交大、同济）</td>
+      <td>与你 PINN4SOH 用的四个数据集<b>完全重合两个</b>，可直接对比</td>
+    </tr>
+    <tr>
+      <td><b>报告指标</b></td>
+      <td>XJTU：MAE≈0.002、RMSE≈0.004、R²=0.99<br>TJU：MAE=0.005、RMSE=0.006、R²=0.97</td>
+      <td>用的是 MAE/RMSE，与你项目的 MAPE 0.88% <b>不是同一指标，不能直接比优劣</b></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout warn">
+<p><b>由此产生一个重要修正：</b>你 skill 里规划的 <b>L1「用 Optuna 自动搜 α/β」</b>，以及 <b>L3「物理约束增强」</b>里的"损失加权"部分，<b>已经被这篇用动态损失平衡做掉了</b>。如果照原计划做，审稿人很容易一句"已有工作用动态平衡实现了同样目的"驳回。</p>
+<p style="margin-bottom:0"><b>但注意：</b>该文用的是"自适应平衡"，不等于"超参搜索最优 α/β"。二者可以区分——只是这个区分很薄，不足以单独支撑一篇论文。</p>
+</div>
+
+<div class="callout">
+<p><b>仍然空着的位置（按可做性排序）：</b></p>
+<p><b>① 不确定性量化</b> —— 摘要中完全未提及。MC Dropout / Deep Ensemble 能给 SOH 估计配上置信区间，对 BMS 实际部署是刚需。这是你 skill 里 L3 的第二项，<b>目前没人占</b>。</p>
+<p><b>② 注意力作用于动力学网络而非特征</b> —— 该文的注意力在"多特征融合"处；把注意力放在 <code>dynamical_F</code> 的 <code>(u, u_x, u_t)</code> 导数输入上，让网络自己判断哪阶导数主导退化，这个切入点尚未见对应文献。</p>
+<p><b>③ 系统化迁移学习</b> —— 该文只在 XJTU/TJU 各自训练评估，没有做跨数据集迁移。你 skill 里 L2 的「12 组源-目标域组合」仍完全空白。</p>
+<p style="margin-bottom:0"><b>④ 物理约束加 Arrhenius / 内阻 / EIS</b> —— 摘要只说"physics-based constraints"，未指明含温度或内阻机理。若确实没有，这块仍有空间。</p>
+</div>
+
+<h2><span class="n">05</span>落到你的代码：三个可插入点</h2>
+
+<table>
+  <thead><tr><th>插入位置</th><th>做法</th><th>难度</th><th>对应文献</th></tr></thead>
+  <tbody>
+    <tr style="background:var(--bad-bg)">
+      <td class="mono">Solution_u 输入层之后</td>
+      <td>对 17 维特征做特征注意力加权再进 MLP —— <b>已被 AM-MFF-PINN 做过，不建议作为主创新</b>（可作为你复现该文时的对照实现）</td>
+      <td style="color:var(--ok)">低</td>
+      <td>A 类（Energies 2025）</td>
+    </tr>
+    <tr>
+      <td class="mono">dynamical_F 的输入 concat 处</td>
+      <td>对 <code>(x, t, u, u_x, u_t)</code> 施加注意力，让动力学网络自己决定哪阶导数更重要。<b>更贴近"物理约束增强"</b></td>
+      <td style="color:var(--warn)">中</td>
+      <td>B 类（IJEPES 2025）</td>
+    </tr>
+    <tr>
+      <td class="mono">跨电池单元层</td>
+      <td>把多颗电芯建成图，用时空注意力建模单元间退化传播。<b>创新性最强，也最重</b></td>
+      <td style="color:var(--bad)">高</td>
+      <td>B 类（MSSP 2026）</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout">
+<p><b>与 skill 里 L3 路线的衔接：</b>「物理约束增强（Arrhenius 温度、内阻耦合、EIS）」和「注意力」并不冲突——可以做成<b>双增强</b>：注意力负责"该看哪些特征"，Arrhenius/内阻负责"物理上必须成立"。这个组合目前文献里还不多见，是相对干净的创新位。</p>
+</div>
+
+<h2><span class="n">06</span>避坑清单（按竞品实测更新）</h2>
+
+<div class="callout warn">
+<p><b>1. 特征维注意力 + 多域特征 + 动态损失平衡 —— 已被 AM-MFF-PINN 全占</b>（Energies 2025，<code>10.3390/en18236270</code>）。详见第 04 节。</p>
+<p><b>2. "注意力 + 残差块 + 可解释"已被做过</b> —— Energy 2026（<code>10.1016/j.energy.2026.142247</code>）。</p>
+<p><b>3. "图时空注意力"已被做过</b> —— MSSP 2026（<code>10.1088/1361-6501/ae5fc0</code>）。</p>
+<p style="margin-bottom:0"><b>可行方向已收敛为四条</b>（见第 04 节末尾）：不确定性量化 / 注意力作用于动力学网络 / 系统化迁移学习 / Arrhenius 等物理机理约束。<b>原先设想的"Optuna 调 α/β"已不建议单独立题。</b></p>
+</div>
+
+<h2><span class="n">07</span>数据与代码可得性</h2>
+
+<div class="kpi">
+  <div><div class="v">886</div><div class="k">基础论文被引（Nat. Commun. 2024）</div></div>
+  <div><div class="v">9</div><div class="k">本簇已核实 DOI 的文献</div></div>
+  <div><div class="v">34</div><div class="k">簇内最高被引（除基础论文）</div></div>
+</div>
+
+<ul>
+  <li><b>开放获取、全文可直接下</b>：Energies 2025（<code>10.3390/en18236270</code>），MDPI 无需机构权限。</li>
+  <li><b>代码可得</b>：基础论文 PINN4SOH 官方仓库公开，你已在用——这是你相对其他组最大的优势，别人只能看论文，你能改代码。</li>
+  <li><b>需机构权限</b>：Elsevier（Energy / JEPE / JES）、IEEE、IOP 三家的其余文献，需校园网直连或图书馆代查。</li>
+</ul>
+
+<h2><span class="n">08</span>本次检索的边界（诚实声明）</h2>
+
+<div class="callout warn">
+<p><b>以上"为什么重要"全部基于<u>标题与题录</u>判断，我没有读任何一篇的正文或摘要。</b>引用前必须核对原文，尤其是"插入点"和"避坑"两节的具体做法——那是我按标题推测的，很可能与论文实际方案有出入。</p>
+<p style="margin-bottom:0"><b>未完成</b>：IEEE Xplore 与 Web of Science 因代理导致机构授权失效未能检索；中文库对 DeepHPM 基本无对口文献。若要补，需关闭代理直连或给这两个域名配「直连」分流。</p>
+</div>
+
+<footer>
+  整理：自动化检索 + OpenAlex / arXiv 官方接口题录核对。<br>
+  被引数取自 OpenAlex，与 Google 学术统计口径不同，写论文时请统一来源。<br>
+  <b>本文件为方向参考，不构成可直接引用的文献综述。</b>
+</footer>
+
+</div>
+</body>
+</html>
