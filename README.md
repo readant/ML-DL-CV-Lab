@@ -8,7 +8,8 @@
 
 <p>
   <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white"></a>
-  <a href="https://github.com/readant/Sum"><img alt="License" src="https://img.shields.io/badge/license-MIT-4DABF7?style=flat-square"></a>
+  <a href="https://github.com/readant/ML-DL-CV-Lab"><img alt="License" src="https://img.shields.io/badge/license-MIT-4DABF7?style=flat-square"></a>
+  <a href="mailto:3908492312@qq.com"><img alt="Contact" src="https://img.shields.io/badge/Contact-QQ%20Mail-1DA1F2?style=flat-square&logo=gmail&logoColor=white"></a>
   <img alt="Platform" src="https://img.shields.io/badge/Platform-Windows-0078D4?style=flat-square&logo=windows">
   <img alt="GPU" src="https://img.shields.io/badge/GPU-RTX%2050%20Series-76B900?style=flat-square&logo=nvidia">
 </p>
@@ -58,7 +59,9 @@
 | 模块 | 位置 | 状态 | 说明 |
 | :--- | :--- | :---: | :--- |
 | 注意力机制 / 多头注意力 (MHA) | `02_deep_learning/01_代码/01_注意力机制/` | ✅ 已落地 | NumPy + PyTorch 实现、14 条单元测试、可视化 demo、文献笔记 |
+| 注意力技术点（笔记 + 代码） | `02_deep_learning/00_笔记/01_注意力机制/` ↔ `01_代码/04-06` | 🟡 进行中 | 技术点地图（A1–A7 + 选型指引）+ 3 篇笔记 + 3 个自包含实现目录（31 条测试）；A2/A6 待写 |
 | 神经网络从零实现（NNDL · MNIST） | `02_deep_learning/01_代码/02_神经网络从零实现_NNDL/` | ✅ 已落地 | 三层 MLP、7 条单元测试、合成数据离线 demo、批判性笔记 |
+| 分组注意力（Group Attention） | `02_deep_learning/01_代码/03_分组注意力算法/` | ✅ 算法层完成 | 与项目解耦的算法实现、25 条单元测试、恒等初始化 + 门控中心化；项目配置仅作示例出现 |
 | 机器学习基础（NumPy / sklearn / 算法） | `01_machine_learning/` | ✅ 方法底座 | 作为研究的方法学基础 |
 | 计算机视觉（OpenCV / YOLO） | `03_computer_vision/` | ✅ 方法底座 | 作为研究的方法学基础 |
 | 姿态估计（MediaPipe 手/身/面） | `04_pose_estimation/` | ✅ 方法底座 | 作为研究的方法学基础 |
@@ -85,7 +88,8 @@ ML-DL-CV-Lab/
 ├── literature/                     # 【研究层】文献管理（按主题：清单+批判性笔记）
 ├── experiments/                    # 【研究层】可复现实验（config+run+results）
 ├── docs/
-│   └── meetings/                   # 【研究层】导师见面记录（模板见 _模板.md）
+│   ├── meetings/                   # 【研究层】导师见面记录（模板见 _模板.md）
+│   └── 资料索引/                    # 【研究层】可交互离线 HTML（资料定位、文献地图）
 │
 ├── 00_prerequisites/               # 【基础层】前置：Python、数学
 ├── 01_machine_learning/            # 【基础层】机器学习（方法底座）
@@ -179,9 +183,12 @@ python network.py                         # 真实 MNIST：首次需联网下载
 ### 文件使用规范
 
 1. 方法复现代码放对应阶段的 `01_代码/`，文献笔记放 `00_笔记/`；研究级文献统一在根 `literature/`。
-2. 数据集、模型文件**统一存放于根级 `data/` 或 `models/`**，绝不与代码、笔记混放。
-3. 每个方法模块配套 `test_*.py` 单元测试，用断言钉死易错细节；实验须可复现（固定种子 + 版本锁定）。
-4. 整个仓库统一使用 `conda activate main` 激活环境，无需在多个环境间切换。
+2. **可交互 HTML 一律放 `docs/资料索引/`**，主题目录只留 `.md` 与 `.py`。
+   两类文件打开方式不同（浏览器 vs 编辑器），同目录混排会让目录难以扫读。
+   页面内指向 PDF 的链接用 `file:///` 绝对路径，故挪位置不断链，但换机器需重新生成。
+3. 数据集、模型文件**统一存放于根级 `data/` 或 `models/`**，绝不与代码、笔记混放。
+4. 每个方法模块配套 `test_*.py` 单元测试，用断言钉死易错细节；实验须可复现（固定种子 + 版本锁定）。
+5. 整个仓库统一使用 `conda activate main` 激活环境，无需在多个环境间切换。
 
 ### Git 提交规范
 
@@ -197,9 +204,24 @@ python network.py                         # 真实 MNIST：首次需联网下载
 
 ---
 
+## 开源协议
+
+本仓库中**由作者本人原创**的代码、笔记与文档采用 [MIT License](LICENSE) 发布，可自由使用、修改与再分发，但需保留版权声明与免责条款。
+
+### 联系作者
+
+- GitHub：[@readant](https://github.com/readant)
+- 邮箱：[3908492312@qq.com](mailto:3908492312@qq.com)（欢迎交流学习、合作与问题反馈）
+
+### 第三方内容说明
+
+1. **预训练模型**（如 YOLOv8、MediaPipe 模型等）不随本仓库分发，来自 Ultralytics、Google MediaPipe 等官方开源项目，版权归原作者所有，使用时请遵守其原始许可。
+2. **数据集与示例素材**不入库，仅在本地学习使用；公开分发时请确认对应数据集的授权协议。
+3. **外部教程、书籍配套代码与文档副本**仅在本地下载学习，已通过 `.gitignore` 排除，不进入本仓库；如需引用请前往对应上游仓库并遵守其原始许可。
+4. 文献题录与笔记仅供个人研究参考，引用请以原始出版物为准。
+
 ## 免责声明
 
-1. 本仓库为个人科研学习记录，所有代码与笔记均为学习/研究过程产出，请勿用于商业用途。
-2. 预训练模型来自 Ultralytics、Google MediaPipe 等官方开源项目，版权归原作者所有。
-3. 环境配置方案仅为个人踩坑经验，因硬件/软件版本差异导致的问题需自行排查。
-4. 文献题录与笔记仅供个人研究参考，引用请以原始出版物为准。
+1. 本仓库为个人科研学习记录，代码与笔记为学习/研究过程产出。
+2. 环境配置方案仅为个人踩坑经验，因硬件/软件版本差异导致的问题需自行排查。
+3. 除上述 MIT 授权的原创内容外，第三方资产的权利归原权利人所有。

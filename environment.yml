@@ -1,16 +1,18 @@
 # ============================================================
 # ML-DL-CV-Lab 统一学习环境 (Conda, 环境名: main)
 # ------------------------------------------------------------
-# 学习阶段采用单一统一环境，覆盖全部学习内容：
-#   机器学习(NumPy/Pandas/Scikit-learn) +
-#   深度学习(PyTorch) +
-#   机器视觉(OpenCV/Ultralytics YOLO) +
-#   姿态估计(MediaPipe)
+# 定位：单一「主环境」，只覆盖 机器学习 / 深度学习 / 机器视觉 / 姿态估计
+#
+# 【边界规则】防止环境再次退化成垃圾桶：
+#   ✅ 允许：科学计算、PyTorch、OpenCV、YOLO、MediaPipe、Jupyter
+#   ❌ 禁止：Web 框架（Django/Flask）、爬虫（Scrapy/Twisted）、
+#            GUI（PyQt6/pygame）、向量库（chromadb）、PDF 翻译（BabelDOC）
+#   上述各有独立环境：campus / courserag / spider / desk / Agent / zotero
 #
 # 一键创建:
 #   conda env create -f environment.yml
-# 更新现有环境:
-#   conda env update -f environment.yml --prune
+# 精确复现（含 sha256 校验）:
+#   pip install -r environment.lock.txt
 # ============================================================
 
 name: main
@@ -20,39 +22,48 @@ channels:
 
 dependencies:
   - python=3.11
-  # ---------- 数据科学 & 机器学习 ----------
-  - numpy
-  - pandas
-  - matplotlib
-  - seaborn
-  - scipy
-  - scikit-learn
-  - scikit-image
-  - pillow
-  - openpyxl
-  - tqdm
-  - requests
-  - pyyaml
   - pip
 
-  # ---------- pip 安装部分 ----------
   - pip:
-      # PyTorch: RTX 50 系(sm_120)专用 CUDA128 预览版
-      # 若无需 RTX 50 系支持，可替换为:
-      #   --index-url https://download.pytorch.org/whl/cu124  (通用稳定版)
-      #   --index-url https://download.pytorch.org/whl/cpu    (仅 CPU)
-      - --index-url https://download.pytorch.org/whl/nightly/cu128
-      - torch
-      - torchvision
-      - torchaudio
-      # 之后的包回到 PyPI 官方源
-      - --index-url https://pypi.org/simple
-      # ---------- 机器视觉 & YOLO ----------
-      - ultralytics
-      - opencv-python
-      - moviepy
-      # ---------- 姿态估计 ----------
-      - mediapipe
+      # ---------- 科学计算 ----------
+      - numpy==2.4.6
+      - pandas==3.1.1
+      - scipy==1.17.1
+      - scikit-learn==1.9.1
+      - scikit-image==0.26.0
+      - matplotlib==3.11.2
+      - seaborn==0.13.2
+      - pillow==13.0.0
+      - openpyxl==3.1.5
+      - tqdm==4.70.1
+      - pyyaml==6.0.3
+      - requests==2.34.2
+
+      # ---------- PyTorch: CUDA 12.8（RTX 50 系 sm_120 必需）----------
+      # +cu128 轮子不在 PyPI，必须指定索引。
+      # 实测：官方源 ~140 KB/s（2.4GB 需 4-5 小时）
+      #       阿里云镜像 ~7.3 MB/s（约 5 分钟）—— 国内首选
+      #
+      #   pip install --progress-bar off \
+      #     "https://mirrors.aliyun.com/pytorch-wheels/cu128/torch-2.11.0%2Bcu128-cp311-cp311-win_amd64.whl" \
+      #     "https://mirrors.aliyun.com/pytorch-wheels/cu128/torchvision-0.26.0%2Bcu128-cp311-cp311-win_amd64.whl"
+      #
+      # 若只需 CPU 版，把下面的 index-url 换成 https://download.pytorch.org/whl/cpu
+      - --index-url https://download.pytorch.org/whl/cu128
+      - torch==2.11.0
+      - torchvision==0.26.0
+
+      # ---------- 回到主 PyPI 源（清华）----------
+      - --index-url https://pypi.tuna.tsinghua.edu.cn/simple
+
+      # ---------- 机器视觉 & 姿态估计 ----------
+      # 注意：opencv-python 由 ultralytics 依赖，opencv-contrib-python 由
+      #       mediapipe 依赖，两者共用同一个 cv2 目录，必然同时安装。
+      #       升级时必须保证两者版本完全一致，否则 cv2 文件会错乱。
+      - opencv-python==5.0.0.93
+      - mediapipe==1.2.3
+      - ultralytics==8.4.213
+
       # ---------- 开发环境 ----------
-      - jupyterlab
-      - jupyterlab-language-pack-zh-CN
+      - jupyterlab==4.6.6
+      - jupyterlab-language-pack-zh-CN==4.5.post3

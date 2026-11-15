@@ -11,8 +11,10 @@
 | :--- | :--- |
 | [文献清单.md](文献清单.md) | 结构化题录（题名/作者/年份/venue/DOI/被引）与检索记录 |
 | [文献笔记.md](文献笔记.md) | 批判性笔记（四问法），逐篇随读随填 |
-| [电池SOH-注意力与DeepHPM文献地图.html](电池SOH-注意力与DeepHPM文献地图.html) | **主文档**。DeepHPM 与 `PINN4SOH` 架构的对应关系、竞品解剖、可用选题空位 |
-| [DeepHPM文献清单-深度隐藏物理模型.html](DeepHPM文献清单-深度隐藏物理模型.html) | DeepHPM 通用文献清单（非电池专项）：源头论文辨析、方法演进 |
+| [电池SOH-注意力与DeepHPM文献地图.html](../../docs/资料索引/电池SOH-文献地图.html) | **主文档**。DeepHPM 与 `PINN4SOH` 架构的对应关系、竞品解剖、可用选题空位 |
+| [DeepHPM文献清单-深度隐藏物理模型.html](../../docs/资料索引/电池SOH-DeepHPM文献清单.html) | DeepHPM 通用文献清单（非电池专项）：源头论文辨析、方法演进 |
+
+> 两份 HTML 已移至 [`docs/资料索引/`](../../docs/资料索引/)，本目录只留 md 与 `pdfs/`。
 | `pdfs/` | 已下载的原文 PDF（**本地存放，不入版本库**，见 `.gitignore` 的 `literature/**/pdfs/`） |
 
 ---

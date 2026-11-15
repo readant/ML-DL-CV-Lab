@@ -5,36 +5,42 @@
 ## 错误1: MediaPipe无法加载模型文件
 
 ### 错误信息
+
 ```
 RuntimeError: Unable to open file at e:\Projects0\ML-DL-CV-Lab\04_pose_estimation\01_代码\面部\面部检测\models\face_landmarker.task
 ```
 
 ### 原因分析
+
 - MediaPipe的底层库无法处理包含中文字符的文件路径
 - 即使Python可以正常访问文件，MediaPipe内部的文件打开机制仍然会失败
 
 ### 解决方案
+
 1. **创建纯ASCII路径的共享模型目录**：
    - 在 `04_pose_estimation` 下创建 `models` 目录（纯ASCII路径）
    - 将所有模型文件集中到这个目录
 
 2. **更新所有测试脚本的模型路径**：
-   - 将路径从 `os.path.dirname(os.path.dirname(os.path.abspath(__file__)))` 
+   - 将路径从 `os.path.dirname(os.path.dirname(os.path.abspath(__file__)))`
    - 改为 `os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))`
    - 这样可以从测试脚本向上三层到达 `04_pose_estimation`，再加上 `models` 目录
 
 ## 错误2: 模型下载404错误
 
 ### 错误信息
+
 ```
 requests.exceptions.HTTPError: 404 Client Error: Not Found for url: ...
 ```
 
 ### 原因分析
+
 - 模型文件的下载URL不正确
 - MediaPipe的模型存储位置可能发生了变化
 
 ### 解决方案
+
 1. **使用正确的MediaPipe模型URL**：
    - 手部检测模型：`https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task`
    - 面部检测模型：`https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task`
@@ -48,15 +54,18 @@ requests.exceptions.HTTPError: 404 Client Error: Not Found for url: ...
 ## 错误3: 路径引用错误
 
 ### 错误信息
+
 ```
 Failed to read file: ...\hand_detection_test.py, File does not exist
 ```
 
 ### 原因分析
+
 - 目录结构发生变化，导致测试脚本中的路径引用错误
 - 之前的目录结构包含多余的层级 `01_基础库demo`
 
 ### 解决方案
+
 1. **删除多余的目录层级**：
    - 删除 `01_基础库demo` 目录
    - 重组项目结构，使所有模块直接位于 `04_pose_estimation` 目录下
@@ -68,15 +77,18 @@ Failed to read file: ...\hand_detection_test.py, File does not exist
 ## 错误4: 模型文件不存在
 
 ### 错误信息
+
 ```
 FileNotFoundError: Unable to open file at ...\pose_landmarker.task
 ```
 
 ### 原因分析
+
 - 模型文件尚未下载或被误删除
 - 测试脚本尝试加载不存在的模型文件
 
 ### 解决方案
+
 1. **运行模型下载脚本**：
    - 执行 `04_pose_estimation/models/下载模型.py`
    - 确保所有必要的模型文件都已下载完成
@@ -88,15 +100,18 @@ FileNotFoundError: Unable to open file at ...\pose_landmarker.task
 ## 错误5: PowerShell命令语法错误
 
 ### 错误信息
+
 ```
 标记"&&"不是此版本中的有效语句分隔符
 ```
 
 ### 原因分析
+
 - PowerShell 5.0及以下版本不支持 `&&` 操作符
 - 尝试在PowerShell中使用Linux风格的命令连接符
 
 ### 解决方案
+
 1. **拆分命令**：
    - 将多个命令拆分为单独执行
    - 使用PowerShell的分号 `;` 或换行来分隔命令
@@ -108,6 +123,7 @@ FileNotFoundError: Unable to open file at ...\pose_landmarker.task
 ## 项目结构优化
 
 ### 优化前
+
 ```
 03_mediapipe_learning/
 ├── 01_基础库demo/  # 多余的层级
@@ -118,6 +134,7 @@ FileNotFoundError: Unable to open file at ...\pose_landmarker.task
 ```
 
 ### 优化后
+
 ```
 04_pose_estimation/
 ├── models/  # 共享模型目录（纯ASCII路径）

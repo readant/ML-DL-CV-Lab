@@ -12,9 +12,12 @@
 ├── attention_numpy.py      # 纯 NumPy 从零实现（softmax / 缩放点积 / 多头 / 因果掩码 / 位置编码）
 ├── attention_torch.py      # PyTorch nn.Module 实现（可训练，含 TransformerBlock）
 ├── test_attention.py       # 14 条断言
-├── demo_attention.py       # 权重矩阵字符热力图演示
-└── 注意力实现笔记.html      # 阅读页：数据流、结论、原始输出、源码全文
+└── demo_attention.py       # 权重矩阵字符热力图演示
 ```
+
+可交互阅读页（数据流、结论、原始输出、源码全文）已移至
+[`../../../docs/资料索引/注意力-实现笔记.html`](../../../docs/资料索引/注意力-实现笔记.html)
+—— 代码目录只放 `.py` 与 `README.md`。
 
 配套笔记在 [`../../00_笔记/01_注意力机制/`](../../00_笔记/01_注意力机制/)。
 
